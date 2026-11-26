@@ -6,8 +6,8 @@ const qs = new URLSearchParams(location.search);
 const roomId = (location.pathname.match(/^\/o\/([^/]+)/)?.[1]) || qs.get('room') || 'main';
 let lang = localStorage.getItem('la_lang') || 'my';
 const T = {
-  my: { studios:'ကစားနိုင်တဲ့ Studio များ', open:'Studio ဖွင့်မယ်', free:'အခမဲ့ • Key မလို • အချိန်ကန့်သတ်ချက်မရှိ', back:'← Hub သို့ပြန်', scene:'1. Scene', audio:'2. Audio', rules:'3. Rules & Text', golive:'4. Go Live', demo:'Auto-Demo စမယ်', stopDemo:'Auto-Demo ရပ်မယ်', launch:'Fullscreen Broadcast စမယ်', connect:'TikTok LIVE ချိတ်မယ်', disconnect:'ချိတ်ဆက်မှု ဖြတ်မယ်', username:'TikTok @username (password မလိုပါ)', backdrop:'Scene နောက်ခံ ရွေးပါ', teamA:'ဘယ်အသင်း', teamB:'ညာအသင်း', roundSec:'အလှည့်အချိန် (စက္ကန့်)', winScore:'အနိုင်ရမှတ်', banner:'အပေါ် Banner စာ', guideBox:'Viewer Guide Box', overlayText:'Live Text Overlay', mapping:'Gift & Comment → Action Mapping', save:'သိမ်းမယ်', songs:'Built-in သီချင်းများ', upload:'ကိုယ်ပိုင် MP3 / WAV တင်မယ်', musicVol:'Music အသံ', sfxVol:'SFX အသံ', announcer:'အသံဖတ်ပြသူ', off:'ပိတ်', browserTts:'Browser TTS (အခမဲ့)', overlayLink:'Overlay link (OBS / LIVE Studio)', copy:'ကူးမယ်', controls:'Controls', pause:'ရပ်', restart:'အသစ်စ', mute:'အသံပိတ်', exit:'ထွက်', sim:'Simulator (Offline စမ်းရန်)', done:'ပြီးပြီ', more:'အခြားဂိမ်းများ', soon:'မကြာမီ', upcoming:'နောက်လာမည့် Studio များ', status:'အခြေအနေ', token:'Control Token (Web deploy မှာ သတ်မှတ်ထားရင် တစ်ခါထည့်ပါ)', tokenNeed:'Real LIVE ချိတ်ဖို့ Control Token ထည့်ပါ (Render → Environment မှာ ရှိတယ်) — Demo ကတော့ token မလိုဘဲ သုံးလို့ရတယ်', tokenSave:'Token သိမ်းမယ်', soundOn:'အသံဖွင့်ရန်' },
-  en: { studios:'PLAYABLE STUDIOS', open:'Open Studio', free:'Free • No key • No time limit', back:'← Back to Hub', scene:'1. Scene', audio:'2. Audio', rules:'3. Rules & Text', golive:'4. Go Live', demo:'Start Auto-Demo', stopDemo:'Stop Auto-Demo', launch:'Launch Fullscreen Broadcast', connect:'Connect TikTok LIVE', disconnect:'Disconnect', username:'TikTok @username (no password needed)', backdrop:'CHOOSE SCENE BACKDROP', teamA:'Left side', teamB:'Right side', roundSec:'Round length (seconds)', winScore:'Winning score', banner:'Top Live Banner', guideBox:'Viewer Guide Box', overlayText:'Live Text Overlay', mapping:'Gift & Comment → Action Mapping', save:'Save', songs:'Built-in songs', upload:'Upload Custom MP3 / WAV', musicVol:'Music Vol', sfxVol:'SFX Vol', announcer:'AI Announcer / Voice Readout', off:'Off', browserTts:'Browser TTS (Free)', overlayLink:'Overlay link (OBS / LIVE Studio)', copy:'Copy', controls:'Open Controls', pause:'Pause', restart:'Restart', mute:'Mute', exit:'Exit', sim:'Quick Simulator Deck (Test Offline)', done:'Done', more:'MORE GAMES', soon:'Soon', upcoming:'UPCOMING STUDIOS', status:'Status', token:'Control Token (enter once if set on the web deploy)', tokenNeed:'Enter the Control Token to connect a real LIVE (Render → Environment) — Demo works without it', tokenSave:'Save token', soundOn:'Tap for sound' }
+  my: { studios:'ကစားနိုင်တဲ့ Studio များ', open:'Studio ဖွင့်မယ်', free:'Auto-Demo အခမဲ့ • Real LIVE အတွက် Token', back:'← Hub သို့ပြန်', scene:'1. Scene', audio:'2. Audio', rules:'3. Rules & Text', golive:'4. Go Live', demo:'Auto-Demo စမယ်', stopDemo:'Auto-Demo ရပ်မယ်', launch:'Fullscreen Broadcast စမယ်', connect:'TikTok LIVE ချိတ်မယ်', disconnect:'ချိတ်ဆက်မှု ဖြတ်မယ်', username:'TikTok @username (password မလိုပါ)', backdrop:'Scene နောက်ခံ ရွေးပါ', teamA:'ဘယ်အသင်း', teamB:'ညာအသင်း', roundSec:'အလှည့်အချိန် (စက္ကန့်)', winScore:'အနိုင်ရမှတ်', banner:'အပေါ် Banner စာ', guideBox:'Viewer Guide Box', overlayText:'Live Text Overlay', mapping:'Gift & Comment → Action Mapping', save:'သိမ်းမယ်', songs:'Built-in သီချင်းများ', upload:'ကိုယ်ပိုင် MP3 / WAV တင်မယ်', musicVol:'Music အသံ', sfxVol:'SFX အသံ', announcer:'အသံဖတ်ပြသူ', off:'ပိတ်', browserTts:'Browser TTS (အခမဲ့)', overlayLink:'Overlay link (OBS / LIVE Studio)', copy:'ကူးမယ်', controls:'Controls', pause:'ရပ်', restart:'အသစ်စ', mute:'အသံပိတ်', exit:'ထွက်', sim:'Simulator (Offline စမ်းရန်)', done:'ပြီးပြီ', more:'အခြားဂိမ်းများ', soon:'မကြာမီ', upcoming:'နောက်လာမည့် Studio များ (PHASE 2)', status:'အခြေအနေ', token:'Control Token (Web deploy မှာ သတ်မှတ်ထားရင် တစ်ခါထည့်ပါ)', tokenNeed:'Real LIVE ချိတ်ဖို့ Control Token ထည့်ပါ (Render → Environment မှာ ရှိတယ်) — Demo ကတော့ token မလိုဘဲ သုံးလို့ရတယ်', tokenSave:'Token သိမ်းမယ်', soundOn:'အသံဖွင့်ရန်' },
+  en: { studios:'PLAYABLE STUDIOS', open:'Open Studio', free:'Free Auto-Demo • Token for LIVE', back:'← Back to Hub', scene:'1. Scene', audio:'2. Audio', rules:'3. Rules & Text', golive:'4. Go Live', demo:'Start Auto-Demo', stopDemo:'Stop Auto-Demo', launch:'Launch Fullscreen Broadcast', connect:'Connect TikTok LIVE', disconnect:'Disconnect', username:'TikTok @username (no password needed)', backdrop:'CHOOSE SCENE BACKDROP', teamA:'Left side', teamB:'Right side', roundSec:'Round length (seconds)', winScore:'Winning score', banner:'Top Live Banner', guideBox:'Viewer Guide Box', overlayText:'Live Text Overlay', mapping:'Gift & Comment → Action Mapping', save:'Save', songs:'Built-in songs', upload:'Upload Custom MP3 / WAV', musicVol:'Music Vol', sfxVol:'SFX Vol', announcer:'AI Announcer / Voice Readout', off:'Off', browserTts:'Browser TTS (Free)', overlayLink:'Overlay link (OBS / LIVE Studio)', copy:'Copy', controls:'Open Controls', pause:'Pause', restart:'Restart', mute:'Mute', exit:'Exit', sim:'Quick Simulator Deck (Test Offline)', done:'Done', more:'MORE GAMES', soon:'Soon', upcoming:'UPCOMING STUDIOS (PHASE 2)', status:'Status', token:'Control Token (enter once if set on the web deploy)', tokenNeed:'Enter the Control Token to connect a real LIVE (Render → Environment) — Demo works without it', tokenSave:'Save token', soundOn:'Tap for sound' }
 };
 const t = k => (T[lang] && T[lang][k]) || T.my[k] || k;
 const FEATURED = [
@@ -77,7 +77,7 @@ function control(body) { return post(api('/control'), body); }
 function sim(body) { return post(api('/sim'), body); }
 function simCountry(cd, gift) { sim({ kind:'chat', id:'sim_me', name:'Host Test', text:cd }); if (gift) setTimeout(() => sim({ kind:'gift', id:'sim_me', name:'Host Test', gift:'Rose', diamonds:5, count:1 }), 180); }
 function tokenBannerHTML() { return `<div class="tokenbanner hidden" id="tokenBanner"><div>${t('tokenNeed')}</div><div class="row" style="margin-top:8px"><input id="bannerToken" type="password" placeholder="CONTROL_TOKEN"><button class="primary narrow" id="bannerTokenSave">${t('tokenSave')}</button></div></div>`; }
-function showTokenBanner(msg) { const b = $('tokenBanner'); if (!b) return; b.classList.remove('hidden'); if (msg) { const d = b.querySelector('div'); if (d) d.textContent = msg; } const inp = $('bannerToken'); if (inp && document.activeElement !== inp) inp.focus(); }
+function showTokenBanner(msg) { const b = $('tokenBanner'); if (!b) return; b.classList.remove('hidden'); const liveTab = document.querySelector('[data-tab="live"]'); if (liveTab && !liveTab.classList.contains('on')) liveTab.click(); if (msg) { const d = b.querySelector('div'); if (d) d.textContent = msg; } const inp = $('bannerToken'); if (inp && document.activeElement !== inp) inp.focus(); }
 function bindTokenBanner() {
   const save = $('bannerTokenSave'); const inp = $('bannerToken');
   if (save && inp) save.onclick = () => { localStorage.setItem('la_token', inp.value.trim()); const g = $('ctlToken'); if (g) g.value = inp.value.trim(); $('tokenBanner').classList.add('hidden'); };
@@ -137,7 +137,8 @@ function demoEvent() {
 function setDemo(on) {
   if (on && !demoTimer) { demoTimer = setInterval(demoEvent, 1600); demoEvent(); }
   if (!on && demoTimer) { clearInterval(demoTimer); demoTimer = null; }
-  document.querySelectorAll('[data-demo]').forEach(b => b.textContent = demoTimer ? t('stopDemo') : t('demo'));
+  document.querySelectorAll('[data-demo]').forEach(b => { b.textContent = demoTimer ? t('stopDemo') : t('demo'); b.classList.toggle('demo-on', !!demoTimer); });
+  const badge = $('demoBadge'); if (badge) badge.classList.toggle('hidden', !demoTimer);
 }
 function onFx(f) {
   if (!f) return;
@@ -330,26 +331,25 @@ function initHub(){
   document.title='Live Arena MM — Interactive LIVE Game Studio';
   $('app').innerHTML=`
   <div class="wrap">
-    <div class="topbar"><span></span>${langBtn()}</div>
-    <div class="logo">Live Arena MM</div>
-    <div class="tagline">${lang==='en'?'Mobile-first interactive game studio for TikTok & YouTube LIVE':'TikTok & YouTube LIVE အတွက် ဖုန်းသုံးဂိမ်း Studio'}</div>
-    <div class="center"><span class="badge">${t('free')}</span></div>
+    <div class="brandmark">▶</div>
+    <div class="logo" style="color:#fff">Live Arena MM</div>
+    <div class="tagline">${lang==='en'?'Mobile-first interactive game studio for TikTok & YouTube LIVE broadcasts':'TikTok & YouTube LIVE အတွက် ဖုန်းသုံးဂိမ်း Studio'}</div>
+    <div class="pillrow">${langBtn()}<span class="badge">${t('free')}</span></div>
     <h2 class="sec">${t('studios')}</h2>
     <div class="grid">${FEATURED.map(f=>`
-      <div class="card"><canvas class="preview" data-preview="${f.id}" width="480" height="270"></canvas>
-      <div style="margin-top:10px"><span class="chip">${f.chip}</span><span class="chip new">NEW</span></div>
-      <h3>${lang==='en'?f.en:f.my}</h3><div class="meta">${f.meta}</div>
+      <div class="card"><div class="previewwrap"><canvas class="preview" data-preview="${f.id}" width="480" height="270"></canvas><span class="livebadge"><i></i>${f.chip}</span></div>
+      <div class="titlerow"><h3>${lang==='en'?f.en:f.my}</h3><span class="chip new">NEW</span></div>
+      <div class="meta">${f.meta}</div>
       <div class="desc">${lang==='en'?f.den:f.dmy}</div>
-      <button class="primary" onclick="location.href='/dashboard?room=${roomId}&game=${f.id}'">${t('open')}</button></div>`).join('')}
+      <button class="primary" onclick="location.href='/dashboard?room=${roomId}&game=${f.id}'">${t('open')} ›</button></div>`).join('')}
     </div>
     <h2 class="sec">${t('more')}</h2>
     <div class="row" id="moreGames">${LEGACY.map(g=>`<button onclick="location.href='/dashboard?room=${roomId}&game=${g.id}'">${esc(g.label)}</button>`).join('')}</div>
     <h2 class="sec">${t('upcoming')}</h2>
-    <div class="grid">
-      <div class="card"><span class="chip">${t('soon')}</span><h3>AI ဗေဒင် Live</h3><div class="desc">${lang==='en'?'Gift-triggered Myanmar fortune readings read aloud.':'Gift နဲ့ ဗေဒင်ဟောပြီး အသံဖတ်ပြမယ်။'}</div></div>
-      <div class="card"><span class="chip">${t('soon')}</span><h3>မြန်မာမြေပုံ သိမ်းပွဲ</h3><div class="desc">${lang==='en'?'Region territory battle by comments and gifts.':'ဒေသ Comment/Gift နဲ့ နယ်မြေသိမ်းပွဲ။'}</div></div>
+    <div class="grid2">
+      <div class="card"><div class="titlerow"><span>🔮</span><span class="chip">${t('soon')}</span></div><h3>AI ဗေဒင် Live</h3><div class="desc">${lang==='en'?'Gift-triggered Myanmar fortune readings read aloud.':'Gift နဲ့ ဗေဒင်ဟောပြီး အသံဖတ်ပြမယ်။'}</div></div>
+      <div class="card"><div class="titlerow"><span>🗺️</span><span class="chip">${t('soon')}</span></div><h3>မြန်မာမြေပုံ သိမ်းပွဲ</h3><div class="desc">${lang==='en'?'Region territory battle by comments and gifts.':'ဒေသ Comment/Gift နဲ့ နယ်မြေသိမ်းပွဲ။'}</div></div>
     </div>
-    <p class="small center" style="margin-top:18px"><a href="/guide">သုံးနည်း လမ်းညွှန်</a></p>
   </div>`;
   bindLang();
   document.querySelectorAll('[data-preview]').forEach(cv => { S = makePreviewState(cv.dataset.preview); drawGame(cv); });
@@ -377,47 +377,46 @@ function initStudio(){
   const wantGame=qs.get('game');
   $('app').innerHTML=`
   <div class="wrap">
-    <div class="topbar"><button onclick="location.href='/?room=${roomId}'">${t('back')}</button><b id="gTitle">Studio</b>${langBtn()}</div>
-    ${tokenBannerHTML()}
-    <div class="panel">
-      <div class="row"><button id="r916" class="on">9:16 Portrait</button><button id="r169">16:9 Landscape</button></div>
-      <canvas id="stage" class="stage ratio916" style="margin-top:8px"></canvas>
-      <div class="row" style="margin-top:8px"><button data-demo class="primary" id="demoBtn">${t('demo')}</button></div>
-    </div>
+    <div class="topbar"><button onclick="location.href='/?room=${roomId}'">←</button><div style="flex:1"><b id="gTitle">Studio</b><div class="small" id="gSub"></div></div>${langBtn()}</div>
     <div class="tabs">
       <button data-tab="scene" class="on">${t('scene')}</button><button data-tab="audio">${t('audio')}</button>
       <button data-tab="rules">${t('rules')}</button><button data-tab="live">${t('golive')}</button>
     </div>
+    <div class="panel">
+      <div class="stagewrap"><canvas id="stage" class="stage ratio916"></canvas></div>
+      <div class="pvcontrols"><button id="r916" class="ratiobtn on">9:16 Portrait</button><button id="r169" class="ratiobtn">16:9 Landscape</button><button data-demo class="primary" id="demoBtn">${t('demo')}</button></div>
+    </div>
     <div class="panel" id="tab-scene">
-      <label>${t('backdrop')}</label><div class="row" id="backs"></div>
-      <label>${t('teamA')}</label><select id="teamA">${SIDES.map(s=>`<option>${s}</option>`).join('')}</select>
-      <label>${t('teamB')}</label><select id="teamB">${SIDES.map(s=>`<option>${s}</option>`).join('')}</select>
-      <label>${t('roundSec')}</label><input id="roundSec" type="number" value="120" min="15">
-      <label>${t('winScore')}</label><input id="winScore" type="number" value="30" min="1">
+      <label>${t('backdrop')}</label><div id="backs"></div>
+      <label>STUDIO SETTINGS</label><div id="studioSettings"></div>
       <div class="row" style="margin-top:10px"><button class="primary" id="saveScene">${t('save')}</button><button id="resetRound">${t('restart')}</button></div>
-      <label>Game</label><div class="row" id="gameBtns"></div>
     </div>
     <div class="panel hidden" id="tab-audio">
-      <label>${t('songs')}</label><div class="simgrid" id="songBtns">${SONGS.map(s=>`<button data-song="${s.id}">${s.n}</button>`).join('')}</div>
-      <label>${t('upload')}</label><input id="upAudio" type="file" accept="audio/*">
+      <div class="titlerow"><b>${t('songs')} (copyright-free)</b><span class="onpill">ON</span></div>
+      <p class="small">Fullscreen မှာ ဖွင့်မယ် • ⭐ က ဂိမ်းသီချင်း • နှိပ်ရင် preview ဖွင့်မယ်</p>
+      <div class="simgrid" id="songBtns">${SONGS.map(s=>`<button data-song="${s.id}">${s.n}</button>`).join('')}</div>
+      <label>Background Music (BGM) — ${t('upload')}</label><input id="upAudio" type="file" accept="audio/*">
       <label>${t('musicVol')}: <span id="mv">${musicVol()*100}</span>%</label><input id="mvol" type="range" min="0" max="100" value="${musicVol()*100}">
       <label>${t('sfxVol')}: <span id="sv">${sfxVol()*100}</span>%</label><input id="svol" type="range" min="0" max="100" value="${sfxVol()*100}">
-      <label>${t('announcer')}</label><select id="ttsMode"><option value="off">${t('off')}</option><option value="browser">${t('browserTts')}</option></select>
+      <button id="ambBtn" style="width:100%;margin-top:8px">Background Ambience: OFF</button>
+      <label>${t('announcer')}</label><div class="row"><button id="ttsOff">${t('off')}</button><button id="ttsBrowser">${t('browserTts')}</button></div>
     </div>
     <div class="panel hidden" id="tab-rules">
       <label>${t('banner')}</label><input id="bannerTxt">
-      <div class="switch"><span>${t('guideBox')}</span><button id="tgGuide" class="on">ON</button></div>
-      <div class="switch"><span>${t('overlayText')}</span><button id="tgBanner" class="on">ON</button></div>
-      <label>${t('mapping')}</label><div id="mapRows"></div>
+      <div class="row" style="margin-top:8px"><button id="tgGuide" class="togpill">${t('guideBox')}: ON</button><button id="tgBanner" class="togpill">${t('overlayText')}: ON</button></div>
+      <div class="titlerow" style="margin-top:12px"><b>${t('mapping')}</b><button id="mapReset">Reset Defaults</button></div>
+      <p class="small">Keyword / gift name တွေကို comma နဲ့ ခြားရေးပါ</p>
+      <div id="mapRows"></div>
       <div class="row" style="margin-top:8px"><button class="primary" id="saveMap">${t('save')}</button></div>
-      <label>Comment keywords — Team A (comma)</label><input id="kwA" value="1">
-      <label>Comment keywords — Team B (comma)</label><input id="kwB" value="2">
     </div>
     <div class="panel hidden" id="tab-live">
-      <label>${t('username')}</label><input id="uname" placeholder="aicreater999">
-      <div class="row" style="margin-top:8px"><button class="primary" id="connBtn">${t('connect')}</button><button id="discBtn">${t('disconnect')}</button></div>
-      <p class="small" style="margin-top:8px">${t('status')}: <span class="status" id="tkStatus">idle</span> <span id="tkErr"></span></p>
-      <label>${t('token')}</label><input id="ctlToken" type="password" placeholder="CONTROL_TOKEN">
+      <div class="titlerow"><b>${t('username')}</b><span class="statuspill" id="tkStatus">Offline</span></div>
+      <div class="tokenpanel">${tokenBannerHTML()}<label>${t('token')}</label><input id="ctlToken" type="password" placeholder="CONTROL_TOKEN"></div>
+      <label>TikTok username</label><input id="uname" placeholder="Enter @username">
+      <div class="row" style="margin-top:8px"><button class="connectbtn" id="connBtn">${t('connect')}</button></div>
+      <div class="row" style="margin-top:8px"><button id="discBtn">${t('disconnect')}</button></div>
+      <p class="small" style="margin-top:8px"><span id="tkErr"></span></p>
+      <p class="small">LIVE အရင်ဖွင့်ထားမှ ချိတ်လို့ရမယ် • Offline စမ်းဖို့ Simulator သုံးပါ</p>
       <label>${t('overlayLink')}</label>
       <div class="row"><input id="ovLink" readonly><button class="narrow" id="copyLink">${t('copy')}</button></div>
       <label>${t('sim')}</label><div class="simgrid" id="simDeck"></div>
@@ -437,44 +436,62 @@ function initStudio(){
   $('demoBtn').onclick=()=>setDemo(!demoTimer);
   $('launchBtn').onclick=()=>{ location.href='/overlay?room='+roomId+'&game='+(S?S.game:'tug'); };
   $('ctlToken').value=localStorage.getItem('la_token')||''; $('ctlToken').oninput=e=>{localStorage.setItem('la_token',e.target.value.trim()); if(e.target.value.trim()){const b=$('tokenBanner'); if(b)b.classList.add('hidden');}};
-  $('connBtn').onclick=()=>{ $('tkStatus').textContent='connecting'; $('tkStatus').className='status connecting'; post(api('/connect'),{username:$('uname').value}); };
+  $('connBtn').onclick=()=>{ $('tkStatus').textContent='Connecting'; $('tkStatus').className='statuspill connecting'; post(api('/connect'),{username:$('uname').value}); };
+  const fld=(id,d)=>{const e=$(id);return e?e.value:d;};
+  const settingsBody=()=>({action:'setSettings',teamA:fld('teamA',S?S.settings.teamA:'ရန်ကုန်'),teamB:fld('teamB',S?S.settings.teamB:'မန္တလေး'),roundSec:Number(fld('roundSec',120)),winScore:Number(fld('winScore',30)),banner:fld('bannerTxt',S?S.settings.banner:''),backdrop:localStorage.getItem('la_back_'+(S?S.game:''))||''});
   $('discBtn').onclick=()=>post(api('/disconnect'),{});
   $('copyLink').onclick=()=>{ $('ovLink').select(); navigator.clipboard&&navigator.clipboard.writeText($('ovLink').value); };
   $('ovLink').value=location.origin+'/o/'+roomId;
-  $('saveScene').onclick=()=>control({action:'setSettings',teamA:$('teamA').value,teamB:$('teamB').value,roundSec:Number($('roundSec').value),winScore:Number($('winScore').value),banner:$('bannerTxt').value,backdrop:localStorage.getItem('la_back_'+(S?S.game:''))||''});
+  $('saveScene').onclick=()=>control(settingsBody());
   $('resetRound').onclick=()=>control({action:'resetRound'});
-  $('saveMap').onclick=()=>{
-    const gifts={}; document.querySelectorAll('#mapRows .maprow').forEach(r=>{const n=r.querySelector('.mn').value.trim(),p=Number(r.querySelector('.mp').value),on=r.querySelector('.mo').classList.contains('on'); if(n&&on)gifts[n]=p;});
-    control({action:'setMapping',gifts,chatA:$('kwA').value.split(','),chatB:$('kwB').value.split(',')});
-    control({action:'setSettings',banner:$('bannerTxt').value,teamA:$('teamA').value,teamB:$('teamB').value,roundSec:Number($('roundSec').value),winScore:Number($('winScore').value),backdrop:localStorage.getItem('la_back_'+(S?S.game:''))||''});
+  const renderMapRows=(saved)=>{
+    const giftRows=DEFAULT_MAP.map(([n,p])=>`<div class="mapcard"><div class="maphead"><span class="mapicon">${esc(n[0]||'G')}</span><span class="grow"><input class="mn" value="${esc(n)}"><div class="typelab">GIFT</div></span><span>PWR</span><input class="mp pwr" type="number" value="${saved[n.toLowerCase()]||p}"><button class="mo onpill">ON</button></div><input class="mk" value="${esc(n)}" style="margin-top:8px"></div>`).join('');
+    const commentRows=`<div class="mapcard"><div class="maphead"><span class="mapicon">1</span><span class="grow"><b>Team A comment</b><div class="typelab">COMMENT</div></span><span>PWR</span><input class="pwr" type="number" value="1" disabled><button class="onpill">ON</button></div><input id="kwA" value="1" style="margin-top:8px"></div><div class="mapcard"><div class="maphead"><span class="mapicon">2</span><span class="grow"><b>Team B comment</b><div class="typelab">COMMENT</div></span><span>PWR</span><input class="pwr" type="number" value="1" disabled><button class="onpill">ON</button></div><input id="kwB" value="2" style="margin-top:8px"></div><div class="mapcard"><div class="maphead"><span class="mapicon">♥</span><span class="grow"><b>Likes = boost</b><div class="typelab">LIKE</div></span><span>PWR</span><input class="pwr" type="number" value="1" disabled><button class="onpill">ON</button></div></div>`;
+    $('mapRows').innerHTML=giftRows+commentRows;
+    document.querySelectorAll('#mapRows .mo').forEach(b=>b.onclick=()=>{const on=b.classList.contains('off'); b.classList.toggle('off',!on); b.textContent=on?'ON':'OFF';});
   };
-  $('tgGuide').onclick=e=>{showGuide=!showGuide;e.target.textContent=showGuide?'ON':'OFF';e.target.classList.toggle('on',showGuide);};
-  $('tgBanner').onclick=e=>{showBanner=!showBanner;e.target.textContent=showBanner?'ON':'OFF';e.target.classList.toggle('on',showBanner);};
+  $('mapReset').onclick=()=>renderMapRows({});
+  $('saveMap').onclick=()=>{
+    const gifts={}; document.querySelectorAll('#mapRows .mapcard').forEach(r=>{const mk=r.querySelector('.mk'); if(!mk)return; const p=Number(r.querySelector('.mp').value),on=!r.querySelector('.mo').classList.contains('off'); if(on) mk.value.split(',').map(x=>x.trim()).filter(Boolean).forEach(k=>gifts[k]=p);});
+    control({action:'setMapping',gifts,chatA:fld('kwA','1').split(','),chatB:fld('kwB','2').split(',')});
+    control(settingsBody());
+  };
+  $('tgGuide').onclick=e=>{showGuide=!showGuide;e.target.textContent=t('guideBox')+': '+(showGuide?'ON':'OFF');e.target.classList.toggle('off',!showGuide);};
+  $('tgBanner').onclick=e=>{showBanner=!showBanner;e.target.textContent=t('overlayText')+': '+(showBanner?'ON':'OFF');e.target.classList.toggle('off',!showBanner);};
   $('mvol').oninput=e=>{localStorage.setItem('la_mvol',e.target.value);$('mv').textContent=e.target.value; if(customAudio)customAudio.volume=musicVol();};
   $('svol').oninput=e=>{localStorage.setItem('la_svol',e.target.value);$('sv').textContent=e.target.value;};
-  $('ttsMode').value=localStorage.getItem('la_tts')||'browser'; $('ttsMode').onchange=e=>localStorage.setItem('la_tts',e.target.value);
-  document.querySelectorAll('[data-song]').forEach(b=>b.onclick=()=>{customAudio=null;playSong(b.dataset.song);});
+  let ambTimer=null;
+  $('ambBtn').onclick=e=>{ if(ambTimer){clearInterval(ambTimer);ambTimer=null;e.target.textContent='Background Ambience: OFF';} else { ambTimer=setInterval(()=>tone(196,.6,.03,'sine'),2400); e.target.textContent='Background Ambience: ON'; } };
+  const ttsBtns=()=>{const m=localStorage.getItem('la_tts')||'browser'; $('ttsOff').classList.toggle('on',m==='off'); $('ttsBrowser').classList.toggle('on',m!=='off');};
+  $('ttsOff').onclick=()=>{localStorage.setItem('la_tts','off');ttsBtns();};
+  $('ttsBrowser').onclick=()=>{localStorage.setItem('la_tts','browser');ttsBtns();};
+  ttsBtns();
+  document.querySelectorAll('[data-song]').forEach(b=>b.onclick=()=>{customAudio=null;playSong(b.dataset.song); document.querySelectorAll('[data-song]').forEach(x=>x.classList.toggle('on',x===b));});
   $('upAudio').onchange=e=>{const f=e.target.files[0]; if(f){customAudio=new Audio(URL.createObjectURL(f)); customAudio.loop=true; playSong('custom');}};
   let first=true;
   connectSSE(s=>{
     if(first){ first=false; if(wantGame&&s.game!==wantGame) control({action:'setGame',game:wantGame}); }
     const g=s.games.find(x=>x.id===s.game); $('gTitle').textContent=g?titleOf(g):s.game;
     document.title=(g?titleOf(g):'Studio')+' — Live Arena MM';
-    $('gameBtns').innerHTML=s.games.map(x=>`<button class="${x.id===s.game?'on':''}" onclick="control({action:'setGame',game:'${x.id}'})">${esc(titleOf(x))}</button>`).join('');
     const f=feat(s.game); const backs=f?f.backs:['Default'];
-    $('backs').innerHTML=backs.map(b=>`<button class="${(localStorage.getItem('la_back_'+s.game)||backs[0])===b?'on':''}" onclick="localStorage.setItem('la_back_${s.game}','${b}');control({action:'setSettings',banner:document.getElementById('bannerTxt').value,teamA:document.getElementById('teamA').value,teamB:document.getElementById('teamB').value,roundSec:Number(document.getElementById('roundSec').value),winScore:Number(document.getElementById('winScore').value),backdrop:'${b}'})">${b}</button>`).join('');
-    if(document.activeElement!==$('teamA'))$('teamA').value=s.settings.teamA;
-    if(document.activeElement!==$('teamB'))$('teamB').value=s.settings.teamB;
+    $('gSub').textContent=s.settings.backdrop||backs[0];
+    $('backs').innerHTML=backs.map(b=>`<button class="backopt ${(localStorage.getItem('la_back_'+s.game)||backs[0])===b?'on':''}" data-back="${esc(b)}"><i></i>${esc(b)}</button>`).join('');
+    document.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>{localStorage.setItem('la_back_'+s.game,b.dataset.back); control({...settingsBody(),backdrop:b.dataset.back});});
+    const versus=['lethwei','slap','soundtruck','tug','thingyan'].includes(s.game);
+    if(!$('studioSettings').children.length || $('studioSettings').dataset.game!==s.game){
+      $('studioSettings').dataset.game=s.game;
+      $('studioSettings').innerHTML=(versus?`<label>${t('teamA')}</label><input id="teamA"><label>${t('teamB')}</label><input id="teamB"><label>${t('winScore')}</label><input id="winScore" type="number" min="1">`:'')+`<label>${t('roundSec')}</label><input id="roundSec" type="number" min="15">`;
+    }
+    if($('teamA')&&document.activeElement!==$('teamA'))$('teamA').value=s.settings.teamA;
+    if($('teamB')&&document.activeElement!==$('teamB'))$('teamB').value=s.settings.teamB;
     if(document.activeElement!==$('bannerTxt'))$('bannerTxt').value=s.settings.banner;
-    $('roundSec').value=s.settings.roundSec; $('winScore').value=s.settings.winScore;
+    if($('roundSec'))$('roundSec').value=s.settings.roundSec; if($('winScore'))$('winScore').value=s.settings.winScore;
+    document.querySelectorAll('[data-song]').forEach(b=>{const star=f&&f.song===b.dataset.song; b.textContent=(curSong===b.dataset.song?'▶ ':'')+(star?'⭐ ':'')+(SONGS.find(x=>x.id===b.dataset.song)||{}).n;});
     if(!$('mapRows').children.length){
-      const saved=s.mapping.gifts||{};
-      const rows=DEFAULT_MAP.map(([n,p])=>`<div class="maprow"><input class="mn" value="${esc(n)}"><input class="mp" type="number" value="${saved[n.toLowerCase()]||p}"><button class="mo on">ON</button></div>`).join('');
-      $('mapRows').innerHTML=rows;
-      document.querySelectorAll('#mapRows .mo').forEach(b=>b.onclick=()=>{b.classList.toggle('on');b.textContent=b.classList.contains('on')?'ON':'OFF';});
+      renderMapRows(s.mapping.gifts||{});
       $('kwA').value=(s.mapping.chatA||['1']).join(','); $('kwB').value=(s.mapping.chatB||['2']).join(',');
     }
-    $('tkStatus').textContent=s.tiktok.status; $('tkStatus').className='status '+s.tiktok.status;
+    $('tkStatus').textContent=s.tiktok.status==='connected'?'LIVE':s.tiktok.status==='connecting'?'Connecting':s.tiktok.status==='error'?'Error':'Offline'; $('tkStatus').className='statuspill '+s.tiktok.status;
     $('tkErr').textContent=s.tiktok.error||'';
     if(s.username&&document.activeElement!==$('uname'))$('uname').value=s.username;
     $('simDeck').innerHTML=simButtons();
@@ -486,30 +503,43 @@ function initStudio(){
 function initBroadcast(){
   $('app').innerHTML=`
   <div id="bc"><canvas id="stage"></canvas>
-    <div class="hud"><div class="bar">
-      <span class="pill" id="pillSim">SIM / OFFLINE</span><span class="pill" id="pillRound">Round 1</span><span class="pill" id="pillTime">120s</span>
+    <div class="statusbar"><span class="r" id="stRound">Round 1</span><span class="tm" id="stTime">120s</span><span class="lf" id="stLeft"></span></div>
+    <div class="hud" style="top:44px"><div class="bar">
       <span class="pill" id="pillCounts"></span></div>
       <div class="banner" id="banner"></div></div>
+    <div class="guideL hidden" id="guideL"></div>
+    <div class="guideR hidden" id="guideR"></div>
     <div class="guide" id="guide"></div>
     <div class="board" id="board"></div>
     <div class="toast hidden" id="toast"></div>
     <div class="winner hidden" id="winner"><div id="winnerTxt"></div></div>
+    <div class="hintstrip hidden" id="hintStrip">TikTok LIVE စပြီး Controls ဖွင့်ဖို့ နှစ်ချက်နှိပ်ပါ</div>
+    <div class="promptpill" id="promptPill"></div>
     <button id="soundBtn" class="primary">${t('soundOn')}</button>
-    <button id="drawerBtn" class="primary">${t('controls')}</button>
+    <button id="drawerBtn" aria-label="Controls"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffb300" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><circle cx="9" cy="7" r="2" fill="#0a0f24"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2" fill="#0a0f24"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="7" cy="17" r="2" fill="#0a0f24"/></svg></button>
     <div id="drawer" class="hidden">
-      <div class="row"><button id="dPause">${t('pause')}</button><button id="dRestart">${t('restart')}</button><button id="dMute">${t('mute')}</button><button id="dExit">${t('exit')}</button></div>
+      <div class="handle"></div>
+      <div class="titlerow"><span><span class="demobadge hidden" id="demoBadge">AUTO-DEMO</span> <b id="drawerTitle">Studio</b><div class="small" id="drawerSub"></div></span>${langBtn()}</div>
+      <div class="statsrow" id="statsRow"></div>
+      <div class="tiles"><button id="dPause" class="green">${t('pause')}</button><button id="dRestart">${t('restart')}</button><button id="dMute">${t('mute')}</button><button id="dExit" class="red">${t('exit')}</button></div>
       <label>${t('musicVol')}</label><input id="dMvol" type="range" min="0" max="100" value="${musicVol()*100}">
       <label>${t('sfxVol')}</label><input id="dSvol" type="range" min="0" max="100" value="${sfxVol()*100}">
-      <div class="switch"><span>${t('guideBox')}</span><button id="dGuide" class="on">ON</button></div>
-      <div class="switch"><span>${t('overlayText')}</span><button id="dBanner" class="on">ON</button></div>
-      <div class="switch"><span>Gift alerts</span><button id="dAlerts" class="on">ON</button></div>
-      <div class="switch"><span>Viewer count</span><button id="dCounts" class="on">ON</button></div>
-      <label>${t('sim')}</label><div class="simgrid" id="simDeck"></div>
+      <div class="chips2">
+        <button id="dGuide" class="togpill">${t('guideBox')}: ON</button>
+        <button id="dBanner" class="togpill">${t('overlayText')}: ON</button>
+        <button id="dAlerts" class="togpill">Gift alerts: ON</button>
+        <button id="dCounts" class="togpill">Viewer count: ON</button>
+      </div>
+      <label>Simulator deck</label>
       <div class="row"><button data-demo class="primary" id="demoBtn">${t('demo')}</button></div>
+      <div class="simgrid" id="simDeck"></div>
+      <label>TikTok LIVE</label>
       ${tokenBannerHTML()}
-      <label>${t('username')}</label><input id="uname" placeholder="aicreater999">
-      <div class="row" style="margin-top:8px"><button class="primary" id="connBtn">${t('connect')}</button><button id="discBtn">${t('disconnect')}</button></div>
-      <p class="small">${t('status')}: <span class="status" id="tkStatus">idle</span> <span id="tkErr"></span></p>
+      <div class="titlerow"><span>${t('username')}</span><span class="statuspill" id="tkStatus">Offline</span></div>
+      <input id="uname" placeholder="Enter @username" style="margin-top:8px">
+      <div class="row" style="margin-top:8px"><button class="connectbtn" id="connBtn">${t('connect')}</button></div>
+      <div class="row" style="margin-top:8px"><button id="discBtn">${t('disconnect')}</button></div>
+      <p class="small"><span id="tkErr"></span></p>
       <label>${t('token')}</label><input id="ctlToken" type="password" placeholder="CONTROL_TOKEN">
       <button class="primary" style="width:100%;margin-top:10px" id="dDone">${t('done')}</button>
     </div>
@@ -522,9 +552,11 @@ function initBroadcast(){
   $('ctlToken').value=localStorage.getItem('la_token')||''; $('ctlToken').oninput=e=>{localStorage.setItem('la_token',e.target.value.trim()); if(e.target.value.trim()){const b=$('tokenBanner'); if(b)b.classList.add('hidden');}};
   $('soundBtn').onclick=e=>{ try{ac(); const f=S?feat(S.game):null; playSong(f?f.song:'festival');}catch{} e.target.classList.add('hidden'); };
   document.body.addEventListener('click',()=>{ try{ac();}catch{} },{once:true});
+  bindLang();
+  if(!localStorage.getItem('la_hint_done')) $('hintStrip').classList.remove('hidden');
   const drawer=$('drawer');
   $('drawerBtn').onclick=()=>drawer.classList.remove('hidden');
-  $('dDone').onclick=()=>drawer.classList.add('hidden');
+  $('dDone').onclick=()=>{drawer.classList.add('hidden'); localStorage.setItem('la_hint_done','1'); $('hintStrip').classList.add('hidden');};
   cv.addEventListener('dblclick',()=>drawer.classList.remove('hidden'));
   $('dPause').onclick=e=>{paused=!paused;e.target.textContent=paused?'▶':'Pause';};
   $('dRestart').onclick=()=>control({action:'resetRound'});
@@ -532,23 +564,29 @@ function initBroadcast(){
   $('dExit').onclick=()=>{ location.href='/dashboard?room='+roomId; };
   $('dMvol').oninput=e=>localStorage.setItem('la_mvol',e.target.value);
   $('dSvol').oninput=e=>localStorage.setItem('la_svol',e.target.value);
-  const tog=(id,fn)=>{$(id).onclick=e=>{const on=!e.target.classList.contains('on');e.target.classList.toggle('on',on);e.target.textContent=on?'ON':'OFF';fn(on);};}
-  tog('dGuide',v=>showGuide=v); tog('dBanner',v=>showBanner=v); tog('dAlerts',v=>showAlerts=v); tog('dCounts',v=>showCounts=v);
+  const tog=(id,label,fn)=>{$(id).onclick=e=>{const on=e.target.classList.contains('off');e.target.classList.toggle('off',!on);e.target.textContent=label+': '+(on?'ON':'OFF');fn(on);};}
+  tog('dGuide',t('guideBox'),v=>showGuide=v); tog('dBanner',t('overlayText'),v=>showBanner=v); tog('dAlerts','Gift alerts',v=>showAlerts=v); tog('dCounts','Viewer count',v=>showCounts=v);
   $('demoBtn').onclick=()=>setDemo(!demoTimer);
   $('connBtn').onclick=()=>post(api('/connect'),{username:$('uname').value});
   $('discBtn').onclick=()=>post(api('/disconnect'),{});
   let songStarted='';
   connectSSE(s=>{
     $('banner').textContent=s.settings.banner; $('banner').style.display=showBanner?'':'none';
-    $('guide').innerHTML=guideLines().map(esc).join('<br>'); $('guide').style.display=showGuide?'':'none';
+    const isFlag=s.game==='flagbattle';
+    $('guideL').classList.toggle('hidden',!(isFlag&&showGuide)); $('guideR').classList.toggle('hidden',!(isFlag&&showGuide));
+    if(isFlag){ $('guideL').innerHTML='<b style="color:#4dd0e1">Teams 1–4</b><br>🌹 Myanmar<br>GG Thailand<br>🫰 Singapore<br>🍦 Malaysia'; $('guideR').innerHTML='<b style="color:#ffb300">Teams 5–8</b><br>🌸 Japan<br>🍩 Korea<br>🧴 China<br>🐾 USA<br>👑 TITAN'; }
+    $('guide').innerHTML=guideLines().map(esc).join('<br>'); $('guide').style.display=(showGuide&&!isFlag)?'':'none';
+    $('promptPill').textContent=guideLines()[0]||''; $('promptPill').style.display=showGuide?'':'none';
     const donors=(s.donors||[]).slice(0,5);
     $('board').innerHTML=donors.length?donors.map((d,i)=>(i+1)+'. '+esc(d.name)+' — '+d.gifts).join('<br>'):'';
     $('board').style.display=donors.length?'':'none';
-    $('pillSim').textContent=s.tiktok.status==='connected'?'LIVE':'SIM / OFFLINE';
-    $('pillSim').className='pill'+(s.tiktok.status==='connected'?' live':'');
-    $('pillRound').textContent='Round '+s.round;
-    $('pillCounts').textContent=showCounts?('👁 '+(s.viewers?s.viewers.length:0)+' • ♥ '+s.likes+' • 🎁 '+s.goal.current):'';
-    $('tkStatus').textContent=s.tiktok.status; $('tkStatus').className='status '+s.tiktok.status;
+    $('stRound').textContent='Round '+s.round;
+    $('stLeft').textContent=isFlag?(Object.values(s.countries).filter(v=>v>0).length||8)+' Left':(s.tiktok.status==='connected'?'LIVE':'SIM');
+    $('pillCounts').textContent=showCounts?('👁 '+(s.viewers?s.viewers.length:0)):'';
+    $('pillCounts').style.display=showCounts?'':'none';
+    $('statsRow').innerHTML=`<span>👁 ${s.viewers?s.viewers.length:0}</span><span>♥ ${s.likes}</span><span>🎁 ${s.goal.current}</span>`;
+    const g=s.games.find(x=>x.id===s.game); $('drawerTitle').textContent=g?titleOf(g):s.game; $('drawerSub').textContent=s.settings.backdrop||'';
+    $('tkStatus').textContent=s.tiktok.status==='connected'?'LIVE':s.tiktok.status==='connecting'?'Connecting':s.tiktok.status==='error'?'Error':'Offline'; $('tkStatus').className='statuspill '+s.tiktok.status;
     $('simDeck').innerHTML=simButtons();
     const f=feat(s.game); const want=f?f.song:'festival';
     if(songStarted!==s.game){songStarted=s.game; try{playSong(want);}catch{}}
@@ -565,7 +603,7 @@ function initBroadcast(){
   });
   setInterval(()=>{
     if(!paused){ drawGame(cv); if(roundLeft>0)roundLeft-=.05; }
-    $('pillTime').textContent=Math.max(0,Math.ceil(roundLeft))+'s';
+    $('stTime').textContent=Math.max(0,Math.ceil(roundLeft))+'s';
     if(roundLeft<=0&&S&&!roundResetting){ roundResetting=true; roundLeft=S.settings.roundSec; control({action:'resetRound'}); }
     const tw=$('toast'); if(Date.now()<toastUntil){tw.textContent=toastText;tw.classList.remove('hidden');}else tw.classList.add('hidden');
     const wn=$('winner'); if(Date.now()<winnerUntil){$('winnerTxt').textContent=winnerText;wn.classList.remove('hidden');}else{wn.classList.add('hidden'); if(winnerText&&Date.now()>=winnerUntil)winnerText='';}
