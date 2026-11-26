@@ -20,6 +20,11 @@ if (typeof AbortSignal !== 'undefined' && !AbortSignal.any) {
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PUB = path.join(ROOT, 'public');
 const PORT = Number(process.env.PORT || 3000);
+export const VERSION = '3.1.0';
+// Public web deploys: set CONTROL_TOKEN so only the owner can drive the show.
+// Unset (local/phone use) keeps control open, as before.
+const controlToken = () => process.env.CONTROL_TOKEN || '';
+const authorized = req => { const t = controlToken(); return !t || req.headers['x-control-token'] === t; };
 
 export const GAMES = [
   { id: 'flagbattle', label: 'နိုင်ငံအလံ တိုက်ပွဲ', how: 'ကိုယ့်နိုင်ငံကုဒ် (MM, TH, SG, JP…) Comment ရေးပါ၊ Gift နဲ့ အလံဘောလုံး ကြီးလာမယ်' },
@@ -343,6 +348,7 @@ export function createServer() {
     const url = new URL(req.url, 'http://localhost');
     const parts = url.pathname.split('/').filter(Boolean);
     try {
+      if (req.method === 'GET' && url.pathname === '/health') return sendJson(res, 200, { ok: true, version: VERSION, rooms: rooms.size });
       if (req.method === 'GET' && url.pathname === '/') return serveFile(res, 'index.html');
       if (req.method === 'GET' && (url.pathname === '/dashboard' || url.pathname === '/control' || url.pathname === '/live/control.html')) return serveFile(res, 'dashboard.html');
       if (req.method === 'GET' && url.pathname === '/guide') return serveFile(res, 'guide.html');
@@ -368,6 +374,7 @@ export function createServer() {
           req.on('close', () => { clearInterval(keep); room.clients.delete(res); });
           return;
         }
+        if (req.method === 'POST' && ['sim', 'control', 'connect', 'disconnect'].includes(parts[3]) && !authorized(req)) return sendJson(res, 401, { error: 'Control Token လိုပါတယ် (Go Live tab မှာ ထည့်ပါ)' });
         if (req.method === 'POST' && parts[3] === 'sim') { applyEvent(room, await readBody(req)); return sendJson(res, 200, { ok: true }); }
         if (req.method === 'POST' && parts[3] === 'control') { applyControl(room, await readBody(req)); return sendJson(res, 200, { ok: true }); }
         if (req.method === 'POST' && parts[3] === 'connect') { const b = await readBody(req); connectTikTok(room, b.username || room.username); return sendJson(res, 202, { ok: true }); }
@@ -380,7 +387,7 @@ export function createServer() {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   createServer().listen(PORT, '0.0.0.0', () => {
-    console.log(`Myanmar Live Studio: http://localhost:${PORT}`);
+    console.log(`Live Arena MM v${VERSION}: http://localhost:${PORT}`);
     for (const list of Object.values(os.networkInterfaces())) for (const n of list || []) if (n.family === 'IPv4' && !n.internal) console.log(`LAN: http://${n.address}:${PORT}`);
     if (parseInt(process.versions.node, 10) < 18) console.log('⚠️ Node 18+ လိုပါတယ် TikTok ချိတ်ဖို့ (node -v နဲ့ စစ်ပါ)');
   });

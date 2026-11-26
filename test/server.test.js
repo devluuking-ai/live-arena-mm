@@ -92,6 +92,23 @@ test('arena games: flag battle country scoring, gift mapping power, versus teams
   });
 });
 
+test('health endpoint and control token guard', async () => {
+  await withServer(async base => {
+    const health = await fetch(`${base}/health`).then(r => r.json());
+    assert.equal(health.ok, true);
+    assert.equal(typeof health.version, 'string');
+    process.env.CONTROL_TOKEN = 'test-token-123';
+    try {
+      const noTok = await fetch(`${base}/api/rooms/main/control`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'setGame', game: 'tug' }) });
+      assert.equal(noTok.status, 401);
+      const withTok = await fetch(`${base}/api/rooms/main/control`, { method: 'POST', headers: { 'content-type': 'application/json', 'x-control-token': 'test-token-123' }, body: JSON.stringify({ action: 'setGame', game: 'tug' }) });
+      assert.equal(withTok.status, 200);
+      const stateOpen = await fetch(`${base}/api/rooms/main/state`);
+      assert.equal(stateOpen.status, 200); // read-only state stays open for overlays
+    } finally { delete process.env.CONTROL_TOKEN; }
+  });
+});
+
 test('unknown room is 404 and demo room exists', async () => {
   await withServer(async base => {
     assert.equal((await fetch(`${base}/api/rooms/NOPE/state`)).status, 404);
