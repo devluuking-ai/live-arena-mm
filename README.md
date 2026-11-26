@@ -1,5 +1,17 @@
 # Live Arena MM (Myanmar Live Studio v3.1 — Web Version)
 
+## မြန်မာလို အမြန်သုံးနည်း
+
+GitHub က code သိမ်းတဲ့နေရာပဲမို့ GitHub link ကနေ တိုက်ရိုက် LIVE သုံးလို့မရပါ။ Web link ရဖို့ Render မှာ တစ်ခါပဲ deploy လုပ်ရပါမယ်:
+
+1. ဒီ link ကိုနှိပ်ပါ: https://render.com/deploy?repo=https://github.com/devluuking-ai/live-arena-mm
+2. GitHub account နဲ့ Render ကိုဝင်ပြီး **Apply / Deploy** နှိပ်ပါ။
+3. Deploy ပြီးရင် `https://live-arena-mm.onrender.com` လို ကိုယ်ပိုင် web link ရပါမယ်။
+4. Render dashboard → **Environment** မှာ `CONTROL_TOKEN` ကိုကူးပြီး studio ရဲ့ **Go Live** tab မှာ တစ်ခါထည့်ပါ။
+5. TikTok မှာ Mobile gaming LIVE အရင်စပြီး Go Live tab မှာ username ထည့်ကာ **TikTok LIVE ချိတ်မယ်** နှိပ်ပါ။
+
+အသေးစိတ် မြန်မာလမ်းညွှန်: [README-MY.md](README-MY.md)
+
 Open-source TikTok LIVE interactive games studio for Myanmar creators, in the style of hosted live-game studios (hub of studio cards, 4-step Scene/Audio/Rules/Go Live settings, fullscreen broadcast): viewers play with comment, like and gift while the host streams. Free — no activation key, no trial limit.
 
 Web version — deploy once and use it from any browser link, no Termux or APK needed. Also runs on a PC, a VPS, or a phone (Termux).
