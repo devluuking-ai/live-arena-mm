@@ -20,11 +20,14 @@ if (typeof AbortSignal !== 'undefined' && !AbortSignal.any) {
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PUB = path.join(ROOT, 'public');
 const PORT = Number(process.env.PORT || 3000);
-export const VERSION = '3.1.0';
-// Public web deploys: set CONTROL_TOKEN so only the owner can drive the show.
-// Unset (local/phone use) keeps control open, as before.
+export const VERSION = '3.2.0';
+// Public web deploys: set CONTROL_TOKEN so only the owner can change settings
+// or connect a real TikTok LIVE. Demo/sim and game switching stay free (like a
+// trial demo), so the studio works the moment the link opens.
+// Unset (local/phone use) keeps everything open, as before.
 const controlToken = () => process.env.CONTROL_TOKEN || '';
 const authorized = req => { const t = controlToken(); return !t || req.headers['x-control-token'] === t; };
+const FREE_ACTIONS = new Set(['setGame', 'resetRound', 'resetScores']);
 
 export const GAMES = [
   { id: 'flagbattle', label: 'နိုင်ငံအလံ တိုက်ပွဲ', how: 'ကိုယ့်နိုင်ငံကုဒ် (MM, TH, SG, JP…) Comment ရေးပါ၊ Gift နဲ့ အလံဘောလုံး ကြီးလာမယ်' },
@@ -349,6 +352,7 @@ export function createServer() {
     const parts = url.pathname.split('/').filter(Boolean);
     try {
       if (req.method === 'GET' && url.pathname === '/health') return sendJson(res, 200, { ok: true, version: VERSION, rooms: rooms.size });
+      if (req.method === 'GET' && url.pathname === '/api/config') return sendJson(res, 200, { ok: true, version: VERSION, tokenRequired: !!controlToken() });
       if (req.method === 'GET' && url.pathname === '/') return serveFile(res, 'index.html');
       if (req.method === 'GET' && (url.pathname === '/dashboard' || url.pathname === '/control' || url.pathname === '/live/control.html')) return serveFile(res, 'dashboard.html');
       if (req.method === 'GET' && url.pathname === '/guide') return serveFile(res, 'guide.html');
@@ -374,11 +378,14 @@ export function createServer() {
           req.on('close', () => { clearInterval(keep); room.clients.delete(res); });
           return;
         }
-        if (req.method === 'POST' && ['sim', 'control', 'connect', 'disconnect'].includes(parts[3]) && !authorized(req)) return sendJson(res, 401, { error: 'Control Token လိုပါတယ် (Go Live tab မှာ ထည့်ပါ)' });
         if (req.method === 'POST' && parts[3] === 'sim') { applyEvent(room, await readBody(req)); return sendJson(res, 200, { ok: true }); }
-        if (req.method === 'POST' && parts[3] === 'control') { applyControl(room, await readBody(req)); return sendJson(res, 200, { ok: true }); }
-        if (req.method === 'POST' && parts[3] === 'connect') { const b = await readBody(req); connectTikTok(room, b.username || room.username); return sendJson(res, 202, { ok: true }); }
-        if (req.method === 'POST' && parts[3] === 'disconnect') { disconnectTikTok(room); return sendJson(res, 200, { ok: true }); }
+        if (req.method === 'POST' && parts[3] === 'control') {
+          const body = await readBody(req);
+          if (!authorized(req) && !FREE_ACTIONS.has(body.action)) return sendJson(res, 401, { error: 'Control Token လိုပါတယ် — အပေါ်က Token အကွက်မှာ ထည့်ပါ' });
+          applyControl(room, body); return sendJson(res, 200, { ok: true });
+        }
+        if (req.method === 'POST' && parts[3] === 'connect') { if (!authorized(req)) return sendJson(res, 401, { error: 'Control Token လိုပါတယ် — အပေါ်က Token အကွက်မှာ ထည့်ပါ' }); const b = await readBody(req); connectTikTok(room, b.username || room.username); return sendJson(res, 202, { ok: true }); }
+        if (req.method === 'POST' && parts[3] === 'disconnect') { if (!authorized(req)) return sendJson(res, 401, { error: 'Control Token လိုပါတယ် — အပေါ်က Token အကွက်မှာ ထည့်ပါ' }); disconnectTikTok(room); return sendJson(res, 200, { ok: true }); }
       }
       res.writeHead(404); res.end('not found');
     } catch (e) { sendJson(res, 400, { error: String(e?.message || e) }); }

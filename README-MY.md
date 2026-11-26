@@ -9,7 +9,7 @@ Render (အခမဲ့) နဲ့ တင်တာက အလွယ်ဆုံ�
 1. Deploy link ကို နှိပ်ပါ: https://render.com/deploy?repo=https://github.com/devluuking-ai/live-arena-mm
 2. GitHub account နဲ့ Render ကို ဝင်ပါ (account မရှိသေးရင် GitHub နဲ့ အသစ်ဖွင့်ပါ)။
 3. **Apply / Deploy** နှိပ်ပါ။ မိနစ်အနည်းငယ်အတွင်း `https://live-arena-mm.onrender.com` လို link ရပါမယ်။
-4. Render dashboard → **Environment** မှာ `CONTROL_TOKEN` တန်ဖိုးကို ကူးထားပါ (deploy တုန်းက အလိုလို ထုတ်ပေးထားတာပါ)။
+4. Render dashboard → **Environment** မှာ `CONTROL_TOKEN` တန်ဖိုးကို ကူးထားပါ (deploy တုန်းက အလိုလို ထုတ်ပေးထားတာပါ)။ Demo/ဂိမ်းပြောင်းတာက token မလိုဘဲ တန်းသုံးလို့ရပါတယ် — token က real TikTok LIVE ချိတ်ဖို့နဲ့ settings သိမ်းဖို့ပဲ လိုတာပါ။
 
 မှတ်ချက်: Render free plan က အသုံးမပြုတာ ကြာရင် အိပ်ပျော်တတ်လို့ LIVE မစခင် link ကို တစ်ခါ ကြိုဖွင့်ထားပါ (ပထမဆုံး ဖွင့်ရင် စက္ကန့် ၃၀–၆၀ ကြာနိုင်ပါတယ်)။
 

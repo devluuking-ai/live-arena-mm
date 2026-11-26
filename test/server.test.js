@@ -97,11 +97,23 @@ test('health endpoint and control token guard', async () => {
     const health = await fetch(`${base}/health`).then(r => r.json());
     assert.equal(health.ok, true);
     assert.equal(typeof health.version, 'string');
+    const cfgOpen = await fetch(`${base}/api/config`).then(r => r.json());
+    assert.equal(cfgOpen.tokenRequired, false);
     process.env.CONTROL_TOKEN = 'test-token-123';
     try {
-      const noTok = await fetch(`${base}/api/rooms/main/control`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'setGame', game: 'tug' }) });
+      const cfg = await fetch(`${base}/api/config`).then(r => r.json());
+      assert.equal(cfg.tokenRequired, true);
+      // Demo/sim and game switching stay free so the studio works on open.
+      const simFree = await fetch(`${base}/api/rooms/main/sim`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ kind: 'chat', id: 'u1', name: 'A', text: '1' }) });
+      assert.equal(simFree.status, 200);
+      const gameFree = await fetch(`${base}/api/rooms/main/control`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'setGame', game: 'tug' }) });
+      assert.equal(gameFree.status, 200);
+      // Settings and real TikTok connect need the token.
+      const noTok = await fetch(`${base}/api/rooms/main/control`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'setSettings', banner: 'x', teamA: 'A', teamB: 'B', roundSec: 60, winScore: 10, backdrop: '' }) });
       assert.equal(noTok.status, 401);
-      const withTok = await fetch(`${base}/api/rooms/main/control`, { method: 'POST', headers: { 'content-type': 'application/json', 'x-control-token': 'test-token-123' }, body: JSON.stringify({ action: 'setGame', game: 'tug' }) });
+      const connNoTok = await fetch(`${base}/api/rooms/main/connect`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ username: 'x' }) });
+      assert.equal(connNoTok.status, 401);
+      const withTok = await fetch(`${base}/api/rooms/main/control`, { method: 'POST', headers: { 'content-type': 'application/json', 'x-control-token': 'test-token-123' }, body: JSON.stringify({ action: 'setSettings', banner: 'x', teamA: 'A', teamB: 'B', roundSec: 60, winScore: 10, backdrop: '' }) });
       assert.equal(withTok.status, 200);
       const stateOpen = await fetch(`${base}/api/rooms/main/state`);
       assert.equal(stateOpen.status, 200); // read-only state stays open for overlays
