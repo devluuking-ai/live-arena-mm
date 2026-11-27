@@ -71,6 +71,9 @@ canvas.preview{width:100%;aspect-ratio:16/9;background:#05081a;border-radius:10p
 .tokenbanner{background:#3a2c00;border:1px solid var(--gold);color:#ffe9a8;border-radius:14px;padding:12px;margin:10px 0;font-size:14px;line-height:1.5}
 .launchbar{position:sticky;bottom:0;background:var(--bg);padding:10px 0;z-index:4}
 #soundBtn{position:absolute;left:10px;bottom:10px;z-index:5}
+#enterFs{position:absolute;inset:0;z-index:8;background:rgba(5,8,26,.72);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:20px}
+#enterFs button{font-size:20px;padding:18px 28px;border-radius:16px}
+#enterFs .sub{color:#dbe4ff;font-size:15px;line-height:1.6}
 .tabs{display:flex;gap:4px;flex-wrap:wrap;margin:10px 0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px}
 .tabs button{background:transparent}
 .tabs button{flex:1;min-width:120px}

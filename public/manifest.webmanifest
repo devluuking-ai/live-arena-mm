@@ -1,0 +1,1 @@
+{"background_color":"#05081a","display":"fullscreen","icons":[{"sizes":"192x192","src":"/public/icon-192.png","type":"image/png"},{"sizes":"512x512","src":"/public/icon-512.png","type":"image/png"}],"name":"Live Arena MM","orientation":"portrait","scope":"/","short_name":"Live Arena","start_url":"/overlay?room=main","theme_color":"#05081a"}

@@ -536,7 +536,8 @@ function initBroadcast(){
     <div class="hintstrip hidden" id="hintStrip">TikTok LIVE စပြီး Controls ဖွင့်ဖို့ နှစ်ချက်နှိပ်ပါ</div>
     <div class="promptpill" id="promptPill"></div>
     <div class="chantbar hidden" id="chantBar"><span class="sp">♪</span><b>အတူတူ တရားနာကြမယ်</b><div class="sub" id="chantSub"></div></div>
-    <button id="soundBtn" class="primary">${t('soundOn')}</button>
+    <div id="enterFs"><button id="enterFsBtn" class="primary">⛶ Screen အပြည့် ဖွင့်ရန်</button><div class="sub">ဒီနေရာကို နှိပ်လိုက်ရင် Browser ရဲ့ search bar နဲ့ အောက်ဘား ပျောက်ပြီး<br>Screen အပြည့် ပေါ်ပါမယ်</div></div>
+    <button id="soundBtn" class="primary hidden">${t('soundOn')}</button>
     <button id="drawerBtn" aria-label="Controls"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffb300" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><circle cx="9" cy="7" r="2" fill="#0a0f24"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2" fill="#0a0f24"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="7" cy="17" r="2" fill="#0a0f24"/></svg></button>
     <div id="drawer" class="hidden">
       <div class="handle"></div>
@@ -572,10 +573,28 @@ function initBroadcast(){
   S = makePreviewState(qs.get('game') && ALL_GAMES.some(g=>g.id===qs.get('game')) ? qs.get('game') : 'tug');
   bindTokenBanner();
   $('ctlToken').value=localStorage.getItem('la_token')||''; $('ctlToken').oninput=e=>{localStorage.setItem('la_token',e.target.value.trim()); if(e.target.value.trim()){const b=$('tokenBanner'); if(b)b.classList.add('hidden');}};
-  const goFullscreen=()=>{ try{ const el=document.documentElement; if(!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(()=>{}); }catch{} };
-  $('soundBtn').onclick=e=>{ goFullscreen(); try{ac(); const f=S?feat(S.game):null; playSong(f?f.song:'festival');}catch{} e.target.classList.add('hidden'); };
+  const goFullscreen=async()=>{
+    const el=document.documentElement;
+    if(document.fullscreenElement) return;
+    try{ await el.requestFullscreen({navigationUI:'hide'}); }
+    catch{ try{ await el.requestFullscreen(); }catch{} }
+    try{ if(screen.orientation && screen.orientation.lock) await screen.orientation.lock('portrait'); }catch{}
+  };
+  const enterShow=()=>{
+    goFullscreen();
+    try{ac(); const f=S?feat(S.game):null; playSong(f?f.song:'festival');}catch{}
+    $('enterFs').classList.add('hidden');
+    $('soundBtn').classList.add('hidden');
+  };
+  $('enterFs').addEventListener('pointerdown',e=>{ e.preventDefault(); enterShow(); });
+  $('soundBtn').onclick=()=>enterShow();
   $('dFull').onclick=()=>goFullscreen();
-  addEventListener('fullscreenchange',()=>setTimeout(fit,60));
+  addEventListener('fullscreenchange',()=>{
+    setTimeout(fit,60);
+    const sb=$('soundBtn');
+    if(document.fullscreenElement){ sb.classList.add('hidden'); }
+    else { sb.textContent='⛶ Screen အပြည့်'; sb.classList.remove('hidden'); }
+  });
   if(window.visualViewport) visualViewport.addEventListener('resize',fit);
   document.body.addEventListener('click',()=>{ try{ac();}catch{} },{once:true});
   bindLang();

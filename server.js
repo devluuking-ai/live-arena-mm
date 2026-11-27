@@ -20,7 +20,7 @@ if (typeof AbortSignal !== 'undefined' && !AbortSignal.any) {
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PUB = path.join(ROOT, 'public');
 const PORT = Number(process.env.PORT || 3000);
-export const VERSION = '3.4.0';
+export const VERSION = '3.5.0';
 // Public web deploys: set CONTROL_TOKEN so only the owner can change settings
 // or connect a real TikTok LIVE. Demo/sim and game switching stay free (like a
 // trial demo), so the studio works the moment the link opens.
@@ -321,7 +321,7 @@ function disconnectTikTok(room) {
 }
 
 /* ------------------------------------------------------------- HTTP */
-const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.webmanifest': 'application/manifest+json; charset=utf-8', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
 function sendJson(res, code, obj) { res.writeHead(code, { 'content-type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(obj)); }
 function readBody(req) {
   return new Promise((resolve, reject) => {
