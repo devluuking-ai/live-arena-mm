@@ -379,11 +379,6 @@ function initHub(){
     </div>
     <h2 class="sec">${t('more')}</h2>
     <div class="row" id="moreGames">${LEGACY.map(g=>`<button onclick="location.href='/dashboard?room=${roomId}&game=${g.id}'">${esc(g.label)}</button>`).join('')}</div>
-    <h2 class="sec">${t('upcoming')}</h2>
-    <div class="grid2">
-      <div class="card"><div class="titlerow"><span>🔮</span><span class="chip">${t('soon')}</span></div><h3>AI ဗေဒင် Live</h3><div class="desc">${lang==='en'?'Gift-triggered Myanmar fortune readings read aloud.':'Gift နဲ့ ဗေဒင်ဟောပြီး အသံဖတ်ပြမယ်။'}</div></div>
-      <div class="card"><div class="titlerow"><span>🗺️</span><span class="chip">${t('soon')}</span></div><h3>မြန်မာမြေပုံ သိမ်းပွဲ</h3><div class="desc">${lang==='en'?'Region territory battle by comments and gifts.':'ဒေသ Comment/Gift နဲ့ နယ်မြေသိမ်းပွဲ။'}</div></div>
-    </div>
   </div>`;
   bindLang();
   document.querySelectorAll('[data-preview]').forEach(cv => { S = makePreviewState(cv.dataset.preview); drawGame(cv); });
