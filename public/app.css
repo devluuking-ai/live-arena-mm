@@ -21,7 +21,7 @@ label{font-size:13px;color:var(--mut);display:block;margin:10px 0 4px}
 .demo-on{background:transparent!important;border:1px solid var(--ok)!important;color:var(--ok)!important}
 .backopt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#0d1433;border:1px solid var(--line);border-radius:12px;padding:14px;margin:6px 0}
 .backopt i{width:10px;height:10px;border-radius:50%;border:2px solid var(--mut);flex:0 0 auto}
-.backopt.on{border-color:var(--gold);color:var(--gold)}
+.backopt.on{background:#0d1433;border-color:var(--gold);color:var(--gold)}
 .backopt.on i{background:var(--gold);border-color:var(--gold)}
 .mapcard{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0;background:#0d1433}
 .maphead{display:flex;align-items:center;gap:8px}
