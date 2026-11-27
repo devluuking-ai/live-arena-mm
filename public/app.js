@@ -155,11 +155,20 @@ function connectSSE(onState) {
 }
 /* ---------- canvas game renderers ---------- */
 const COLORS = ['#ff5252','#42a5f5','#66bb6a','#ffee58','#ab47bc','#ffa726'];
+const pagodaImg = new Image(); let pagodaReady = false;
+pagodaImg.onload = () => { pagodaReady = true; document.querySelectorAll('[data-preview]').forEach(cv => { const keep = S; S = makePreviewState(cv.dataset.preview); drawGame(cv); S = keep; }); };
+pagodaImg.src = '/public/pagoda-bg.jpg';
+function drawCover(c, img, w, h) {
+  const scale = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+  const dw = img.naturalWidth * scale, dh = img.naturalHeight * scale;
+  c.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+}
 const FLAG_COLORS = { MM:'#f9d616', TH:'#2d2a4a', SG:'#ef3340', JP:'#ffffff', KR:'#0047a0', MY:'#010066', CN:'#de2910', US:'#3c3b6e', UK:'#012169', AE:'#00732f' };
 function rr(c,x,y,w,h,r){c.beginPath();c.roundRect?c.roundRect(x,y,w,h,r):c.rect(x,y,w,h);c.fill();}
 function txt(c,s,x,y,size=20,color='#fff',align='center',bold=true){c.fillStyle=color;c.font=`${bold?'700 ':''}${size}px system-ui,'Noto Sans Myanmar',sans-serif`;c.textAlign=align;c.textBaseline='middle';c.fillText(s,x,y);}
 function bar(c,x,y,w,h,pct,color){c.fillStyle='rgba(255,255,255,.18)';rr(c,x,y,w,h,h/2);c.fillStyle=color;rr(c,x,y,Math.max(h,w*Math.min(1,Math.max(0,pct))),h,h/2);}
 function backdrop(c,w,h,game){
+  if ((game==='temple'||game==='pagoda') && pagodaReady) { drawCover(c, pagodaImg, w, h); return; }
   const b = (S && S.settings.backdrop) || '';
   const night = /night|neon|blood|dusk/i.test(b);
   const g = c.createLinearGradient(0,0,0,h);
@@ -284,8 +293,17 @@ function drawGeneric(c,w,h,now){
   if (S.game==='quiz'){ txt(c,S.quiz.question,w/2,h*.35,24,'#fff'); S.quiz.choices.forEach((ch,i)=>txt(c,(i+1)+'. '+ch,w/2,h*(.45+i*.08),20,'#ffe082')); if(S.quiz.winner)txt(c,S.quiz.winner+' မှန်!',w/2,h*.75,26,'#69f0ae'); return; }
   if (S.game==='number'){ txt(c,'1–100 ခန့်မှန်းပါ',w/2,h*.35,26,'#fff'); txt(c,S.number.lastHint||'',w/2,h*.45,20,'#ffe082'); if(S.number.best)txt(c,'အနီးဆုံး: '+S.number.best.name+' ('+S.number.best.guess+')',w/2,h*.55,18,'#dbe4ff'); return; }
   if (S.game==='temple'||S.game==='pagoda'){
-    c.fillStyle='#ffb300'; c.beginPath(); c.moveTo(w/2,h*.2); c.lineTo(w*.62,h*.45); c.lineTo(w*.38,h*.45); c.fill(); rr(c,w*.36,h*.45,w*.28,h*.08,4);
-    (S.viewers||[]).slice(0,20).forEach((v,i)=>{const x=w*(.12+(i%5)*.19), y=h*(.62+Math.floor(i/5)*.09); c.fillStyle=COLORS[i%6]; c.beginPath(); c.arc(x,y,13,0,7); c.fill(); txt(c,v.name,x,y+24,12,'#fff');});
+    // Seated worshippers on the marble courtyard (photo backdrop fills the screen).
+    (S.viewers||[]).slice(0,24).forEach((v,i)=>{
+      const row=Math.floor(i/6), col=i%6;
+      const x=w*(.14+col*.145), y=h*(.7+row*.065);
+      c.fillStyle=v.vip?'#ffd700':COLORS[i%6]; c.beginPath(); c.arc(x,y,13,0,7); c.fill();
+      c.fillStyle='rgba(5,8,26,.75)'; rr(c,x-34,y+16,68,20,10);
+      txt(c,v.name,x,y+26,11,v.vip?'#ffd700':'#fff');
+    });
+    const flowers=Math.min(12,(S.donors||[]).reduce((a,d)=>a+Math.ceil(d.gifts/10),0));
+    for(let i=0;i<flowers;i++){ const x=w*(.2+i*.055), y=h*.655; c.fillStyle='#f8a5c2'; c.beginPath(); c.arc(x,y,7,0,7); c.fill(); c.fillStyle='#ffb300'; c.beginPath(); c.arc(x,y,3,0,7); c.fill(); }
+    if(!(S.viewers||[]).length) txt(c,'Comment ရေးပြီး တရားဝိုင်းထဲ ဝင်ပါ',w/2,h*.74,20,'#ffe082');
     return;
   }
   // scoreboard fallback
@@ -503,18 +521,21 @@ function initStudio(){
 function initBroadcast(){
   $('app').innerHTML=`
   <div id="bc"><canvas id="stage"></canvas>
-    <div class="statusbar"><span class="r" id="stRound">Round 1</span><span class="tm" id="stTime">120s</span><span class="lf" id="stLeft"></span></div>
+    <div class="statusbar" id="statusBar"><span class="r" id="stRound">Round 1</span><span class="tm" id="stTime">120s</span><span class="lf" id="stLeft"></span></div>
+    <div class="titlepill hidden" id="titlePill"></div>
     <div class="hud" style="top:44px"><div class="bar">
       <span class="pill" id="pillCounts"></span></div>
       <div class="banner" id="banner"></div></div>
     <div class="guideL hidden" id="guideL"></div>
     <div class="guideR hidden" id="guideR"></div>
+    <div class="giftcard hidden" id="giftCard"><div class="fl">🌸</div><div>Gift ဖြင့် ဝင်<br>ထိုင် ပန်းကပ်</div><div class="pill" style="margin-top:6px">💬 Comment</div></div>
     <div class="guide" id="guide"></div>
     <div class="board" id="board"></div>
     <div class="toast hidden" id="toast"></div>
     <div class="winner hidden" id="winner"><div id="winnerTxt"></div></div>
     <div class="hintstrip hidden" id="hintStrip">TikTok LIVE စပြီး Controls ဖွင့်ဖို့ နှစ်ချက်နှိပ်ပါ</div>
     <div class="promptpill" id="promptPill"></div>
+    <div class="chantbar hidden" id="chantBar"><span class="sp">♪</span><b>အတူတူ တရားနာကြမယ်</b><div class="sub" id="chantSub"></div></div>
     <button id="soundBtn" class="primary">${t('soundOn')}</button>
     <button id="drawerBtn" aria-label="Controls"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffb300" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><circle cx="9" cy="7" r="2" fill="#0a0f24"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2" fill="#0a0f24"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="7" cy="17" r="2" fill="#0a0f24"/></svg></button>
     <div id="drawer" class="hidden">
@@ -522,6 +543,7 @@ function initBroadcast(){
       <div class="titlerow"><span><span class="demobadge hidden" id="demoBadge">AUTO-DEMO</span> <b id="drawerTitle">Studio</b><div class="small" id="drawerSub"></div></span>${langBtn()}</div>
       <div class="statsrow" id="statsRow"></div>
       <div class="tiles"><button id="dPause" class="green">${t('pause')}</button><button id="dRestart">${t('restart')}</button><button id="dMute">${t('mute')}</button><button id="dExit" class="red">${t('exit')}</button></div>
+      <button id="dFull" class="primary" style="width:100%">⛶ Screen အပြည့် (Fullscreen)</button>
       <label>${t('musicVol')}</label><input id="dMvol" type="range" min="0" max="100" value="${musicVol()*100}">
       <label>${t('sfxVol')}</label><input id="dSvol" type="range" min="0" max="100" value="${sfxVol()*100}">
       <div class="chips2">
@@ -545,12 +567,16 @@ function initBroadcast(){
     </div>
   </div>`;
   const cv=$('stage');
-  const fit=()=>{cv.width=innerWidth;cv.height=innerHeight;};
+  const fit=()=>{const vv=window.visualViewport; cv.width=Math.round(vv?vv.width:innerWidth); cv.height=Math.round(vv?vv.height:innerHeight);};
   fit(); addEventListener('resize',fit);
   S = makePreviewState(qs.get('game') && ALL_GAMES.some(g=>g.id===qs.get('game')) ? qs.get('game') : 'tug');
   bindTokenBanner();
   $('ctlToken').value=localStorage.getItem('la_token')||''; $('ctlToken').oninput=e=>{localStorage.setItem('la_token',e.target.value.trim()); if(e.target.value.trim()){const b=$('tokenBanner'); if(b)b.classList.add('hidden');}};
-  $('soundBtn').onclick=e=>{ try{ac(); const f=S?feat(S.game):null; playSong(f?f.song:'festival');}catch{} e.target.classList.add('hidden'); };
+  const goFullscreen=()=>{ try{ const el=document.documentElement; if(!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(()=>{}); }catch{} };
+  $('soundBtn').onclick=e=>{ goFullscreen(); try{ac(); const f=S?feat(S.game):null; playSong(f?f.song:'festival');}catch{} e.target.classList.add('hidden'); };
+  $('dFull').onclick=()=>goFullscreen();
+  addEventListener('fullscreenchange',()=>setTimeout(fit,60));
+  if(window.visualViewport) visualViewport.addEventListener('resize',fit);
   document.body.addEventListener('click',()=>{ try{ac();}catch{} },{once:true});
   bindLang();
   if(!localStorage.getItem('la_hint_done')) $('hintStrip').classList.remove('hidden');
@@ -573,10 +599,17 @@ function initBroadcast(){
   connectSSE(s=>{
     $('banner').textContent=s.settings.banner; $('banner').style.display=showBanner?'':'none';
     const isFlag=s.game==='flagbattle';
+    const isTemple=s.game==='temple'||s.game==='pagoda';
+    $('statusBar').classList.toggle('hidden',isTemple);
+    $('titlePill').classList.toggle('hidden',!isTemple);
+    if(isTemple) $('titlePill').textContent='ရွှေတိဂုံ ဘုရားဖူး';
+    $('giftCard').classList.toggle('hidden',!(isTemple&&showGuide));
+    $('chantBar').classList.toggle('hidden',!isTemple);
+    if(isTemple) $('chantSub').textContent=s.settings.banner;
     $('guideL').classList.toggle('hidden',!(isFlag&&showGuide)); $('guideR').classList.toggle('hidden',!(isFlag&&showGuide));
     if(isFlag){ $('guideL').innerHTML='<b style="color:#4dd0e1">Teams 1–4</b><br>🌹 Myanmar<br>GG Thailand<br>🫰 Singapore<br>🍦 Malaysia'; $('guideR').innerHTML='<b style="color:#ffb300">Teams 5–8</b><br>🌸 Japan<br>🍩 Korea<br>🧴 China<br>🐾 USA<br>👑 TITAN'; }
-    $('guide').innerHTML=guideLines().map(esc).join('<br>'); $('guide').style.display=(showGuide&&!isFlag)?'':'none';
-    $('promptPill').textContent=guideLines()[0]||''; $('promptPill').style.display=showGuide?'':'none';
+    $('guide').innerHTML=guideLines().map(esc).join('<br>'); $('guide').style.display=(showGuide&&!isFlag&&!isTemple)?'':'none';
+    $('promptPill').textContent=guideLines()[0]||''; $('promptPill').style.display=(showGuide&&!isTemple)?'':'none';
     const donors=(s.donors||[]).slice(0,5);
     $('board').innerHTML=donors.length?donors.map((d,i)=>(i+1)+'. '+esc(d.name)+' — '+d.gifts).join('<br>'):'';
     $('board').style.display=donors.length?'':'none';
