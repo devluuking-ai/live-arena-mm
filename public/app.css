@@ -74,15 +74,16 @@ canvas.preview{width:100%;aspect-ratio:16/9;background:#05081a;border-radius:10p
 #enterFs{position:absolute;inset:0;z-index:8;background:rgba(5,8,26,.72);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:20px}
 #enterFs button{font-size:20px;padding:18px 28px;border-radius:16px}
 #enterFs .sub{color:#dbe4ff;font-size:15px;line-height:1.6}
-.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:10px 0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px}
+.tabs{display:flex;gap:4px;flex-wrap:nowrap;margin:10px 0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px}
 .tabs button{background:transparent}
-.tabs button{flex:1;min-width:120px}
+.tabs button{flex:1;min-width:0;font-size:13px;padding:9px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.previewpanel{padding:8px}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .row>*{flex:1}
 .row .narrow{flex:0 0 auto}
-canvas.stage{background:#05081a;border-radius:14px;border:1px solid var(--line)}
-.ratio916{width:min(74vw,330px);aspect-ratio:9/16}
+canvas.stage{background:#05081a;border-radius:18px;border:1px solid var(--line)}
+.ratio916{width:min(92vw,430px);aspect-ratio:9/16}
 .ratio169{width:100%;aspect-ratio:16/9}
 .switch{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
 .maprow{display:grid;grid-template-columns:1fr 90px 70px;gap:8px;align-items:center;margin:6px 0}
