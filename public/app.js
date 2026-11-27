@@ -377,16 +377,10 @@ function initHub(){
       <div class="desc">${lang==='en'?f.den:f.dmy}</div>
       <button class="primary" onclick="location.href='/dashboard?room=${roomId}&game=${f.id}'">${t('open')} ›</button></div>`).join('')}
     </div>
-    <h2 class="sec">${t('more')}</h2>
-    <div class="row" id="moreGames">${LEGACY.map(g=>`<button onclick="location.href='/dashboard?room=${roomId}&game=${g.id}'">${esc(g.label)}</button>`).join('')}</div>
   </div>`;
   bindLang();
   document.querySelectorAll('[data-preview]').forEach(cv => { S = makePreviewState(cv.dataset.preview); drawGame(cv); });
   S = null;
-  connectSSE(s=>{
-    const more=s.games.filter(g=>!feat(g.id));
-    $('moreGames').innerHTML=more.map(g=>`<button onclick="location.href='/dashboard?room=${roomId}&game=${g.id}'">${esc(g.label)}</button>`).join('');
-  });
 }
 function simButtons(){
   if(!S)return'';
