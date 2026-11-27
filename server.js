@@ -20,7 +20,7 @@ if (typeof AbortSignal !== 'undefined' && !AbortSignal.any) {
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PUB = path.join(ROOT, 'public');
 const PORT = Number(process.env.PORT || 3000);
-export const VERSION = '3.9.0';
+export const VERSION = '3.10.0';
 // Public web deploys: set CONTROL_TOKEN so only the owner can change settings
 // or connect a real TikTok LIVE. Demo/sim and game switching stay free (like a
 // trial demo), so the studio works the moment the link opens.

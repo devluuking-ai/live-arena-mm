@@ -85,12 +85,12 @@ function requestAppFullscreen(target) {
 let roundLeft = 120, lastRound = 1, winnerText = '', winnerUntil = 0, toastText = '', toastUntil = 0, roundResetting = false;
 const particles = [], floats = [];
 const api = p => `/api/rooms/${encodeURIComponent(roomId)}${p}`;
-async function post(path, body) { try { const tok = localStorage.getItem('la_token') || ''; const r = await fetch(path, { method:'POST', headers:{'content-type':'application/json', ...(tok ? {'x-control-token': tok} : {})}, body: JSON.stringify(body || {}) }); const j = await r.json().catch(() => ({})); if (r.status === 401) { showTokenBanner(j.error); const e = $('tkErr'); if (e) e.textContent = j.error || 'Control Token လိုပါတယ်'; } return j; } catch { return {}; } }
+async function post(path, body) { try { const tok = localStorage.getItem('la_token') || ''; const r = await fetch(path, { method:'POST', headers:{'content-type':'application/json', ...(tok ? {'x-control-token': tok} : {})}, body: JSON.stringify(body || {}) }); const j = await r.json().catch(() => ({})); if (r.status === 401) { showTokenBanner(j.error, true); const e = $('tkErr'); if (e) e.textContent = j.error || 'Control Token လိုပါတယ်'; } return j; } catch { return {}; } }
 function control(body) { return post(api('/control'), body); }
 function sim(body) { return post(api('/sim'), body); }
 function simCountry(cd, gift) { sim({ kind:'chat', id:'sim_me', name:'Host Test', text:cd }); if (gift) setTimeout(() => sim({ kind:'gift', id:'sim_me', name:'Host Test', gift:'Rose', diamonds:5, count:1 }), 180); }
 function tokenBannerHTML() { return `<div class="tokenbanner hidden" id="tokenBanner"><div>${t('tokenNeed')}</div><div class="row" style="margin-top:8px"><input id="bannerToken" type="password" placeholder="CONTROL_TOKEN"><button class="primary narrow" id="bannerTokenSave">${t('tokenSave')}</button></div></div>`; }
-function showTokenBanner(msg) { const b = $('tokenBanner'); if (!b) return; b.classList.remove('hidden'); const liveTab = document.querySelector('[data-tab="live"]'); if (liveTab && !liveTab.classList.contains('on')) liveTab.click(); if (msg) { const d = b.querySelector('div'); if (d) d.textContent = msg; } const inp = $('bannerToken'); if (inp && document.activeElement !== inp) inp.focus(); }
+function showTokenBanner(msg, reveal = false) { const b = $('tokenBanner'); if (!b) return; b.classList.remove('hidden'); if (msg) { const d = b.querySelector('div'); if (d) d.textContent = msg; } if (reveal) { const liveTab = document.querySelector('[data-tab="live"]'); if (liveTab && !liveTab.classList.contains('on')) liveTab.click(); const inp = $('bannerToken'); if (inp && document.activeElement !== inp) { try { inp.focus({ preventScroll: true }); } catch { inp.focus(); } } } }
 function bindTokenBanner() {
   const save = $('bannerTokenSave'); const inp = $('bannerToken');
   if (save && inp) save.onclick = () => { localStorage.setItem('la_token', inp.value.trim()); const g = $('ctlToken'); if (g) g.value = inp.value.trim(); $('tokenBanner').classList.add('hidden'); };
@@ -448,6 +448,7 @@ function initStudio(){
   </div>`;
   bindLang();
   bindTokenBanner();
+  window.scrollTo(0, 0);
   S = makePreviewState(wantGame && ALL_GAMES.some(g=>g.id===wantGame) ? wantGame : 'tug');
   document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{
     document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));
