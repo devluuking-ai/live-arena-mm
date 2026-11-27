@@ -6,7 +6,7 @@ const qs = new URLSearchParams(location.search);
 const roomId = (location.pathname.match(/^\/o\/([^/]+)/)?.[1]) || qs.get('room') || 'main';
 let lang = localStorage.getItem('la_lang') || 'my';
 const T = {
-  my: { studios:'ကစားနိုင်တဲ့ Studio များ', open:'Studio ဖွင့်မယ်', free:'Auto-Demo အခမဲ့ • Real LIVE အတွက် Token', back:'← Hub သို့ပြန်', scene:'1. Scene', audio:'2. Audio', rules:'3. Rules & Text', golive:'4. Go Live', demo:'Auto-Demo စမယ်', stopDemo:'Auto-Demo ရပ်မယ်', launch:'Fullscreen Broadcast စမယ်', connect:'TikTok LIVE ချိတ်မယ်', disconnect:'ချိတ်ဆက်မှု ဖြတ်မယ်', username:'TikTok @username (password မလိုပါ)', backdrop:'Scene နောက်ခံ ရွေးပါ', teamA:'ဘယ်အသင်း', teamB:'ညာအသင်း', roundSec:'အလှည့်အချိန် (စက္ကန့်)', winScore:'အနိုင်ရမှတ်', banner:'အပေါ် Banner စာ', guideBox:'Viewer Guide Box', overlayText:'Live Text Overlay', mapping:'Gift & Comment → Action Mapping', save:'သိမ်းမယ်', songs:'Built-in သီချင်းများ', upload:'ကိုယ်ပိုင် MP3 / WAV တင်မယ်', musicVol:'Music အသံ', sfxVol:'SFX အသံ', announcer:'အသံဖတ်ပြသူ', off:'ပိတ်', browserTts:'Browser TTS (အခမဲ့)', overlayLink:'Overlay link (OBS / LIVE Studio)', copy:'ကူးမယ်', controls:'Controls', pause:'ရပ်', restart:'အသစ်စ', mute:'အသံပိတ်', exit:'ထွက်', sim:'Simulator (Offline စမ်းရန်)', done:'ပြီးပြီ', more:'အခြားဂိမ်းများ', soon:'မကြာမီ', upcoming:'နောက်လာမည့် Studio များ (PHASE 2)', status:'အခြေအနေ', token:'Control Token (Web deploy မှာ သတ်မှတ်ထားရင် တစ်ခါထည့်ပါ)', tokenNeed:'Real LIVE ချိတ်ဖို့ Control Token ထည့်ပါ (Render → Environment မှာ ရှိတယ်) — Demo ကတော့ token မလိုဘဲ သုံးလို့ရတယ်', tokenSave:'Token သိမ်းမယ်', soundOn:'အသံဖွင့်ရန်' },
+  my: { studios:'ကစားနိုင်တဲ့ Studio များ', open:'Studio ဖွင့်မယ်', free:'Auto-Demo အခမဲ့ • Real LIVE အတွက် Token', back:'← Hub သို့ပြန်', scene:'1. Scene', audio:'2. Audio', rules:'3. Rules & Text', golive:'4. Go Live', demo:'Auto-Demo စမယ်', stopDemo:'Auto-Demo ရပ်မယ်', launch:'⛶ Fullscreen Live စတင်မယ်', connect:'TikTok LIVE ချိတ်မယ်', disconnect:'ချိတ်ဆက်မှု ဖြတ်မယ်', username:'TikTok @username (password မလိုပါ)', backdrop:'Scene နောက်ခံ ရွေးပါ', teamA:'ဘယ်အသင်း', teamB:'ညာအသင်း', roundSec:'အလှည့်အချိန် (စက္ကန့်)', winScore:'အနိုင်ရမှတ်', banner:'အပေါ် Banner စာ', guideBox:'Viewer Guide Box', overlayText:'Live Text Overlay', mapping:'Gift & Comment → Action Mapping', save:'သိမ်းမယ်', songs:'Built-in သီချင်းများ', upload:'ကိုယ်ပိုင် MP3 / WAV တင်မယ်', musicVol:'Music အသံ', sfxVol:'SFX အသံ', announcer:'အသံဖတ်ပြသူ', off:'ပိတ်', browserTts:'Browser TTS (အခမဲ့)', overlayLink:'Overlay link (OBS / LIVE Studio)', copy:'ကူးမယ်', controls:'Controls', pause:'ရပ်', restart:'အသစ်စ', mute:'အသံပိတ်', exit:'ထွက်', sim:'Simulator (Offline စမ်းရန်)', done:'ပြီးပြီ', more:'အခြားဂိမ်းများ', soon:'မကြာမီ', upcoming:'နောက်လာမည့် Studio များ (PHASE 2)', status:'အခြေအနေ', token:'Control Token (Web deploy မှာ သတ်မှတ်ထားရင် တစ်ခါထည့်ပါ)', tokenNeed:'Real LIVE ချိတ်ဖို့ Control Token ထည့်ပါ (Render → Environment မှာ ရှိတယ်) — Demo ကတော့ token မလိုဘဲ သုံးလို့ရတယ်', tokenSave:'Token သိမ်းမယ်', soundOn:'အသံဖွင့်ရန်' },
   en: { studios:'PLAYABLE STUDIOS', open:'Open Studio', free:'Free Auto-Demo • Token for LIVE', back:'← Back to Hub', scene:'1. Scene', audio:'2. Audio', rules:'3. Rules & Text', golive:'4. Go Live', demo:'Start Auto-Demo', stopDemo:'Stop Auto-Demo', launch:'Launch Fullscreen Broadcast', connect:'Connect TikTok LIVE', disconnect:'Disconnect', username:'TikTok @username (no password needed)', backdrop:'CHOOSE SCENE BACKDROP', teamA:'Left side', teamB:'Right side', roundSec:'Round length (seconds)', winScore:'Winning score', banner:'Top Live Banner', guideBox:'Viewer Guide Box', overlayText:'Live Text Overlay', mapping:'Gift & Comment → Action Mapping', save:'Save', songs:'Built-in songs', upload:'Upload Custom MP3 / WAV', musicVol:'Music Vol', sfxVol:'SFX Vol', announcer:'AI Announcer / Voice Readout', off:'Off', browserTts:'Browser TTS (Free)', overlayLink:'Overlay link (OBS / LIVE Studio)', copy:'Copy', controls:'Open Controls', pause:'Pause', restart:'Restart', mute:'Mute', exit:'Exit', sim:'Quick Simulator Deck (Test Offline)', done:'Done', more:'MORE GAMES', soon:'Soon', upcoming:'UPCOMING STUDIOS (PHASE 2)', status:'Status', token:'Control Token (enter once if set on the web deploy)', tokenNeed:'Enter the Control Token to connect a real LIVE (Render → Environment) — Demo works without it', tokenSave:'Save token', soundOn:'Tap for sound' }
 };
 const t = k => (T[lang] && T[lang][k]) || T.my[k] || k;
@@ -68,7 +68,20 @@ const SIDES = ['ရန်ကုန်','မန္တလေး','နေပြည�
 const SONGS = [ {id:'festival',n:'Village Festival'}, {id:'edm',n:'Sound Truck EDM'}, {id:'fight',n:'Lethwei Fight'}, {id:'funny',n:'Funny Bounce'}, {id:'march',n:'Heave-Ho March'}, {id:'rowing',n:'Rowing Groove'}, {id:'boss',n:'Boss Battle'}, {id:'arena',n:'Arena Anthem'}, {id:'garden',n:'Happy Garden'} ];
 const DEFAULT_MAP = [ ['Rose',5],['နှင်းဆီ',5],['Finger Heart',5],['GG',5],['Ice Cream Cone',10],['Doughnut',30],['Perfume',50],['Money Gun',100],['Galaxy',300],['Lion',500],['Universe',1000] ];
 let S = null; // server state
+let activeSSE = null, studioDrawTimer = null;
 let demoTimer = null, paused = false, muted = false, showGuide = true, showBanner = true, showAlerts = true, showCounts = true;
+function requestAppFullscreen(target) {
+  const el = target || document.documentElement;
+  if (document.fullscreenElement) return Promise.resolve(true);
+  try {
+    const p = el.requestFullscreen ? el.requestFullscreen({ navigationUI: 'hide' }) : null;
+    return Promise.resolve(p).then(() => true).catch(async () => {
+      try { await el.requestFullscreen(); return true; } catch { return false; }
+    });
+  } catch {
+    try { return Promise.resolve(el.requestFullscreen()).then(() => true).catch(() => false); } catch { return Promise.resolve(false); }
+  }
+}
 let roundLeft = 120, lastRound = 1, winnerText = '', winnerUntil = 0, toastText = '', toastUntil = 0, roundResetting = false;
 const particles = [], floats = [];
 const api = p => `/api/rooms/${encodeURIComponent(roomId)}${p}`;
@@ -150,8 +163,11 @@ function onFx(f) {
 }
 function burst() { for (let i = 0; i < 18; i++) particles.push({ x: .5 + (Math.random()-.5)*.3, y: .5, vx: (Math.random()-.5)*.01, vy: -Math.random()*.012, life: 60, hue: Math.floor(Math.random()*360) }); }
 function connectSSE(onState) {
+  if (activeSSE) { try { activeSSE.close(); } catch {} }
   const es = new EventSource(api('/events'));
+  activeSSE = es;
   es.onmessage = e => { try { const m = JSON.parse(e.data); if (m.type === 'state') { S = m.state; if (S.round !== lastRound) { lastRound = S.round; roundLeft = S.settings.roundSec; winnerText = ''; roundResetting = false; } onState && onState(S); } else if (m.type === 'fx') onFx(m.fx); } catch {} };
+  return es;
 }
 /* ---------- canvas game renderers ---------- */
 const COLORS = ['#ff5252','#42a5f5','#66bb6a','#ffee58','#ab47bc','#ffa726'];
@@ -452,7 +468,18 @@ function initStudio(){
   $('r916').onclick=()=>{ratio='9:16';cv.className='stage ratio916';$('r916').classList.add('on');$('r169').classList.remove('on');sizeCanvas(cv,ratio);};
   $('r169').onclick=()=>{ratio='16:9';cv.className='stage ratio169';$('r169').classList.add('on');$('r916').classList.remove('on');sizeCanvas(cv,ratio);};
   $('demoBtn').onclick=()=>setDemo(!demoTimer);
-  $('launchBtn').onclick=()=>{ location.href='/overlay?room='+roomId+'&game='+(S?S.game:'tug'); };
+  $('launchBtn').onclick=()=>{
+    const game = S ? S.game : 'tug';
+    const fsPromise = requestAppFullscreen(document.documentElement);
+    try { ac(); } catch {}
+    if (studioDrawTimer) { clearInterval(studioDrawTimer); studioDrawTimer = null; }
+    document.body.dataset.page = 'broadcast';
+    try { history.replaceState(null, '', '/overlay?room=' + encodeURIComponent(roomId) + '&game=' + encodeURIComponent(game)); } catch {}
+    initBroadcast({ autoEnter: true, game });
+    fsPromise.then(ok => {
+      if (!ok && !document.fullscreenElement) { const sb = $('soundBtn'); if (sb) { sb.textContent = '⛶ Screen အပြည့်'; sb.classList.remove('hidden'); } }
+    });
+  };
   $('ctlToken').value=localStorage.getItem('la_token')||''; $('ctlToken').oninput=e=>{localStorage.setItem('la_token',e.target.value.trim()); if(e.target.value.trim()){const b=$('tokenBanner'); if(b)b.classList.add('hidden');}};
   $('connBtn').onclick=()=>{ $('tkStatus').textContent='Connecting'; $('tkStatus').className='statuspill connecting'; post(api('/connect'),{username:$('uname').value}); };
   const fld=(id,d)=>{const e=$(id);return e?e.value:d;};
@@ -516,9 +543,9 @@ function initStudio(){
   });
   sizeCanvas(cv,ratio);
   addEventListener('resize',()=>sizeCanvas(cv,ratio));
-  setInterval(()=>{ if(!paused) drawGame(cv); },50);
+  studioDrawTimer = setInterval(()=>{ if(!paused) drawGame(cv); },50);
 }
-function initBroadcast(){
+function initBroadcast(opts = {}){
   $('app').innerHTML=`
   <div id="bc"><canvas id="stage"></canvas>
     <div class="statusbar" id="statusBar"><span class="r" id="stRound">Round 1</span><span class="tm" id="stTime">120s</span><span class="lf" id="stLeft"></span></div>
@@ -570,15 +597,13 @@ function initBroadcast(){
   const cv=$('stage');
   const fit=()=>{const vv=window.visualViewport; cv.width=Math.round(vv?vv.width:innerWidth); cv.height=Math.round(vv?vv.height:innerHeight);};
   fit(); addEventListener('resize',fit);
-  S = makePreviewState(qs.get('game') && ALL_GAMES.some(g=>g.id===qs.get('game')) ? qs.get('game') : 'tug');
+  S = makePreviewState(opts.game && ALL_GAMES.some(g=>g.id===opts.game) ? opts.game : (qs.get('game') && ALL_GAMES.some(g=>g.id===qs.get('game')) ? qs.get('game') : 'tug'));
   bindTokenBanner();
   $('ctlToken').value=localStorage.getItem('la_token')||''; $('ctlToken').oninput=e=>{localStorage.setItem('la_token',e.target.value.trim()); if(e.target.value.trim()){const b=$('tokenBanner'); if(b)b.classList.add('hidden');}};
   const goFullscreen=async()=>{
-    const el=document.documentElement;
-    if(document.fullscreenElement) return;
-    try{ await el.requestFullscreen({navigationUI:'hide'}); }
-    catch{ try{ await el.requestFullscreen(); }catch{} }
-    try{ if(screen.orientation && screen.orientation.lock) await screen.orientation.lock('portrait'); }catch{}
+    const ok = await requestAppFullscreen($('bc') || document.documentElement);
+    if (ok) { try{ if(screen.orientation && screen.orientation.lock) await screen.orientation.lock('portrait'); }catch{} }
+    return ok;
   };
   const enterShow=()=>{
     goFullscreen();
@@ -589,10 +614,14 @@ function initBroadcast(){
   $('enterFs').addEventListener('pointerdown',e=>{ e.preventDefault(); enterShow(); });
   $('soundBtn').onclick=()=>enterShow();
   $('dFull').onclick=()=>goFullscreen();
+  if (opts.autoEnter) {
+    $('enterFs').classList.add('hidden');
+    try{ac(); const f=S?feat(S.game):null; playSong(f?f.song:'festival');}catch{}
+  }
   addEventListener('fullscreenchange',()=>{
     setTimeout(fit,60);
     const sb=$('soundBtn');
-    if(document.fullscreenElement){ sb.classList.add('hidden'); }
+    if(document.fullscreenElement){ sb.classList.add('hidden'); try{ if(screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(()=>{}); }catch{} }
     else { sb.textContent='⛶ Screen အပြည့်'; sb.classList.remove('hidden'); }
   });
   if(window.visualViewport) visualViewport.addEventListener('resize',fit);
@@ -612,6 +641,7 @@ function initBroadcast(){
   const tog=(id,label,fn)=>{$(id).onclick=e=>{const on=e.target.classList.contains('off');e.target.classList.toggle('off',!on);e.target.textContent=label+': '+(on?'ON':'OFF');fn(on);};}
   tog('dGuide',t('guideBox'),v=>showGuide=v); tog('dBanner',t('overlayText'),v=>showBanner=v); tog('dAlerts','Gift alerts',v=>showAlerts=v); tog('dCounts','Viewer count',v=>showCounts=v);
   $('demoBtn').onclick=()=>setDemo(!demoTimer);
+  setDemo(!!demoTimer);
   $('connBtn').onclick=()=>post(api('/connect'),{username:$('uname').value});
   $('discBtn').onclick=()=>post(api('/disconnect'),{});
   let songStarted='';

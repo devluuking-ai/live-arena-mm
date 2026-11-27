@@ -20,7 +20,7 @@ if (typeof AbortSignal !== 'undefined' && !AbortSignal.any) {
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PUB = path.join(ROOT, 'public');
 const PORT = Number(process.env.PORT || 3000);
-export const VERSION = '3.5.0';
+export const VERSION = '3.6.0';
 // Public web deploys: set CONTROL_TOKEN so only the owner can change settings
 // or connect a real TikTok LIVE. Demo/sim and game switching stay free (like a
 // trial demo), so the studio works the moment the link opens.
@@ -333,7 +333,9 @@ function readBody(req) {
 function serveFile(res, file) {
   const full = path.join(PUB, file);
   if (!full.startsWith(PUB) || !fs.existsSync(full)) { res.writeHead(404); return res.end('not found'); }
-  res.writeHead(200, { 'content-type': MIME[path.extname(full)] || 'application/octet-stream' });
+  const ext = path.extname(full);
+  const cache = ['.html', '.js', '.css', '.webmanifest'].includes(ext) ? 'no-store' : 'public, max-age=86400';
+  res.writeHead(200, { 'content-type': MIME[ext] || 'application/octet-stream', 'cache-control': cache });
   fs.createReadStream(full).pipe(res);
 }
 function getRoom(id) {
